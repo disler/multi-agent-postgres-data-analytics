@@ -46,22 +46,22 @@ Throughout the codebase we built up several existing and new patterns and termin
 
 ## 📺 Video Series - Learn Faster 📺
 - [Part 1 - Prompt Engineering an ENTIRE codebase: Postgres Data Analytics Al Agent](qqq)
-  - Branch: `1-prompt-engineering-an-entire-codebase`
+  - Branch: `v1-prompt-engineering-an-entire-codebase`
   - Video
 - [Part 2 - One Prompt is NOT enough: Using AutoGen to code a Multi-Agent Postgres AI Tool](qqq)
-  - Branch: `2-using-autogen-to-build-our-multi-agent-tool`
+  - Branch: `v2-using-autogen-to-build-our-multi-agent-tool`
   - Video
 - [Part 3 - Make AutoGen Consistent: CONTROL your LLM agents for ACCURATE Postgres Al Data Analytics](qqq)
-  - Branch: `3-make-autogen-consistent-control-your-llm`
+  - Branch: `v3-make-autogen-consistent-control-your-llm`
   - Video
 - [Part 4 - AutoGen Token Tactics: FIRING AI Agents, USELESS Vector Embeddings, GPT-4 Memory Tricks](qqq)
-  - Branch: `4-autogen-token-tactics-firing-ai-agents`
+  - Branch: `v4-autogen-token-tactics-firing-ai-agents`
   - Video
 - [Part 5 - AutoGen SPYWARE: Coding Systems for SUCCESSFUL AI Agents (Postgres Data Analytics)](qqq)
-  - Branch: `5-autogen-spyware-coding-systems-for-successful-ai`
+  - Branch: `v5-autogen-spyware-coding-systems-for-successful-ai`
   - Video
 - [Part 6 - qqq](qqq)
-  - Branch: `6-qqq`
+  - Branch: `v6-control-flow-and-structured-response`
   - Video
 
 
