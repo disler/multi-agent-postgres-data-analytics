@@ -13,12 +13,19 @@ import autogen
 
 from postgres_da_ai_agent.types import ConversationResult
 
+
+# ---------------- Your Environment Variables ----------------
+
 dotenv.load_dotenv()
 
 assert os.environ.get("DATABASE_URL"), "POSTGRES_CONNECTION_URL not found in .env file"
 assert os.environ.get(
     "OPENAI_API_KEY"
 ), "POSTGRES_CONNECTION_URL not found in .env file"
+
+
+# ---------------- Constants ----------------
+
 
 DB_URL = os.environ.get("DATABASE_URL")
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
@@ -27,6 +34,8 @@ POSTGRES_TABLE_DEFINITIONS_CAP_REF = "TABLE_DEFINITIONS"
 
 
 def main():
+    # ---------------- Parse '--prompt' CLI Parameter ----------------
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--prompt", help="The prompt for the AI")
     args = parser.parse_args()
@@ -41,8 +50,10 @@ def main():
 
     session_id = rand.generate_session_id(raw_prompt)
 
+    # ---------------- Create Agent Instruments And Build Database Connection ----------------
+
     with PostgresAgentInstruments(DB_URL, session_id) as (agent_instruments, db):
-        # ----------- Gate Team -------------
+        # ----------- Gate Team: Prevent bad prompts from running and burning your $$$ -------------
 
         gate_orchestrator = agents.build_team_orchestrator(
             "scrum_master",
@@ -98,7 +109,7 @@ def main():
             table_definitions,
         )
 
-        # ----------- Data Eng Team -------------
+        # ----------- Data Eng Team: Based on a sql table definitions and a prompt create an sql statement and execute it -------------
 
         data_eng_orchestrator = agents.build_team_orchestrator(
             "data_eng",
@@ -125,7 +136,7 @@ def main():
                     f"❌ Orchestrator failed. Team: {data_eng_orchestrator.name} Failed"
                 )
 
-        # ----------- Data Insights Team -------------
+        # ----------- Data Insights Team: Based on sql table definitions and a prompt generate novel insights -------------
 
         innovation_prompt = f"Given this database query: '{raw_prompt}'. Generate novel insights and new database queries to give business insights."
 

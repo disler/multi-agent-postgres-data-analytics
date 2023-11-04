@@ -3,6 +3,11 @@ from transformers import BertTokenizer, BertModel
 
 
 class DatabaseEmbedder:
+    """
+    This class is responsible for embedding database table definitions and
+    computing similarity between user queries and table definitions.
+    """
+
     def __init__(self):
         self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
         self.model = BertModel.from_pretrained("bert-base-uncased")
@@ -10,6 +15,10 @@ class DatabaseEmbedder:
         self.map_name_to_table_def = {}
 
     def add_table(self, table_name: str, text_representation: str):
+        """
+        Add a table to the database embedder.
+        Map the table name to its embedding and text representation.
+        """
         self.map_name_to_embeddings[table_name] = self.compute_embeddings(
             text_representation
         )
@@ -17,6 +26,9 @@ class DatabaseEmbedder:
         self.map_name_to_table_def[table_name] = text_representation
 
     def compute_embeddings(self, text):
+        """
+        Compute embeddings for a given text using the BERT model.
+        """
         inputs = self.tokenizer(
             text, return_tensors="pt", truncation=True, padding=True, max_length=512
         )
@@ -69,7 +81,10 @@ class DatabaseEmbedder:
 
         return similar_tables_via_embeddings + similar_tables_via_word_match
 
-    def get_table_definitions_from_names(self, table_names: list) -> list:
+    def get_table_definitions_from_names(self, table_names: list) -> str:
+        """
+        Given a list of table names, return their table definitions.
+        """
         table_defs = [
             self.map_name_to_table_def[table_name] for table_name in table_names
         ]

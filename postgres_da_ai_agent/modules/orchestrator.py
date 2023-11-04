@@ -8,6 +8,10 @@ from postgres_da_ai_agent.types import Chat, ConversationResult
 
 
 class Orchestrator:
+    """
+    Orchestrators manage conversations between multi-agent teams.
+    """
+
     def __init__(
         self,
         name: str,
@@ -15,13 +19,22 @@ class Orchestrator:
         instruments: AgentInstruments,
         validate_results_func: callable = None,
     ):
+        # Name of agent team
         self.name = name
+
+        # List of agents
         self.agents = agents
+
+        # List of raw messages - partially redundant due to self.chats
         self.messages = []
-        self.complete_keyword = "APPROVED"
-        self.error_keyword = "ERROR"
+
+        # Agent instruments - state and functions that agents can use
         self.instruments = instruments
+
+        # List of chats - {from, to, message}
         self.chats: List[Chat] = []
+
+        # Function to validate results at the end of every conversation
         self.validate_results_func: callable = validate_results_func
 
         if len(self.agents) < 2:
@@ -63,12 +76,25 @@ class Orchestrator:
             return self.latest_message.get("content", "")
         return str(self.messages[-1])
 
+    def handle_validate_func(self) -> Tuple[bool, str]:
+        """
+        Run the validate_results_func if it exists
+        """
+        if self.validate_results_func:
+            return self.validate_results_func(self.messages)
+        return True, ""
+
     def send_message(
         self,
         from_agent: autogen.ConversableAgent,
         to_agent: autogen.ConversableAgent,
         message: str,
     ):
+        """
+        Send a message from one agent to another.
+        Record the message in chat log in the orchestrator
+        """
+
         from_agent.send(message, to_agent)
 
         self.chats.append(
@@ -79,7 +105,17 @@ class Orchestrator:
             )
         )
 
+    def add_message(self, message: str):
+        """
+        Add a message to the orchestrator
+        """
+        self.messages.append(message)
+
     def get_message_as_str(self):
+        """
+        Get all messages as a string
+        """
+
         messages_as_str = ""
 
         for message in self.messages:
@@ -100,9 +136,6 @@ class Orchestrator:
 
     def get_cost_and_tokens(self):
         return llm.estimate_price_and_tokens(self.get_message_as_str())
-
-    def add_message(self, message: str):
-        self.messages.append(message)
 
     def has_functions(self, agent: autogen.ConversableAgent):
         return len(agent._function_map) > 0
@@ -179,7 +212,9 @@ class Orchestrator:
 
     def sequential_conversation(self, prompt: str) -> ConversationResult:
         """
-        Runs a sequential conversation between agents
+        Runs a sequential conversation between agents.
+
+        The most common type of conversation.
 
         For example
             "Agent A" -> "Agent B" -> "Agent C" -> "Agent D" -> "Agent E"
@@ -214,7 +249,7 @@ class Orchestrator:
 
                 print(f"-------- Orchestrator Complete --------\n\n")
 
-                was_successful, error_message = self.validate_results_func()
+                was_successful, error_message = self.handle_validate_func()
 
                 self.spy_on_agents()
 
@@ -263,7 +298,7 @@ class Orchestrator:
 
         print(f"-------- Orchestrator Complete --------\n\n")
 
-        was_successful, error_message = self.validate_results_func()
+        was_successful, error_message = self.handle_validate_func()
 
         if was_successful:
             print(f"✅ Orchestrator was successful")
@@ -337,7 +372,7 @@ class Orchestrator:
 
         self.spy_on_agents()
 
-        agents_were_successful, error_message = self.validate_results_func()
+        agents_were_successful, error_message = self.handle_validate_func()
 
         cost, tokens = self.get_cost_and_tokens()
 

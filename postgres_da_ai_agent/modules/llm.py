@@ -47,7 +47,10 @@ def response_parser(response: Dict[str, Any]):
 
 
 def prompt(prompt: str, model: str = "gpt-4") -> str:
-    # validate the openai api key - if it's not valid, raise an error
+    """
+    Generate a response from a prompt using the OpenAI API.
+    """
+
     if not openai.api_key:
         sys.exit(
             """
@@ -89,11 +92,17 @@ def add_cap_ref(
 
 
 def count_tokens(text: str):
+    """
+    Count the number of tokens in a string.
+    """
     enc = tiktoken.get_encoding("cl100k_base")
     return len(enc.encode(text))
 
 
 def estimate_price_and_tokens(text):
+    """
+    Conservative estimate the price and tokens for a given text.
+    """
     # round up to the output tokens
     COST_PER_1k_TOKENS = 0.06
 

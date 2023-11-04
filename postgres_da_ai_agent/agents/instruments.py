@@ -47,7 +47,7 @@ class PostgresAgentInstruments(AgentInstruments):
     Guidelines:
         - Agent Functions should not call other agent functions directly
             - Instead Agent Functions should call external lower level modules
-        - Prefer 1 to 1 mapping of agents and their functions (controverisal)
+        - Prefer 1 to 1 mapping of agents and their functions
         - The state lifecycle lives between all agent orchestrations
     """
 
@@ -58,20 +58,27 @@ class PostgresAgentInstruments(AgentInstruments):
         self.db = None
         self.session_id = session_id
         self.messages = []
-        self.complete_keyword = "APPROVED"
-
         self.innovation_index = 0
 
     def __enter__(self):
+        """
+        Support entering the 'with' statement
+        """
         self.reset_files()
         self.db = PostgresManager()
         self.db.connect_with_url(self.db_url)
         return self, self.db
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        """
+        Support exiting the 'with' statement
+        """
         self.db.close()
 
     def sync_messages(self, messages: list):
+        """
+        Syncs messages with the orchestrator
+        """
         self.messages = messages
 
     def reset_files(self):
@@ -87,6 +94,9 @@ class PostgresAgentInstruments(AgentInstruments):
             os.remove(os.path.join(self.root_dir, fname))
 
     def get_file_path(self, fname: str):
+        """
+        Get the full path to a file in the root_dir
+        """
         return os.path.join(self.root_dir, fname)
 
     # -------------------------- Agent Properties -------------------------- #
@@ -144,7 +154,9 @@ class PostgresAgentInstruments(AgentInstruments):
         return f"Successfully wrote innovation file. You can check my work."
 
     def validate_innovation_files(self):
-        # loop from 0 to innovation_index and verify file exists with content
+        """
+        loop from 0 to innovation_index and verify file exists with content
+        """
         for i in range(self.innovation_index):
             fname = self.get_file_path(f"{i}_innovation_file.json")
             with open(fname, "r") as f:

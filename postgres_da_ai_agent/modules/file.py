@@ -1,5 +1,4 @@
 import json
-
 import yaml
 
 
@@ -21,12 +20,8 @@ def write_json_file(fname, json_str: str):
 
 
 def write_yml_file(fname, json_str: str):
-    print("write_yml_file() ", json_str)
-
     # Try to replace single quotes with double quotes for JSON
     cleaned_json_str = json_str.replace("'", '"')
-
-    print("cleaned_json_str() ", cleaned_json_str)
 
     # Safely convert the JSON string to a Python object
     try:

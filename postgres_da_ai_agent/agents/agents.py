@@ -1,43 +1,18 @@
-import os
 from typing import Optional, List, Dict, Any
 from postgres_da_ai_agent.agents.instruments import PostgresAgentInstruments
-from postgres_da_ai_agent.modules.db import PostgresManager
-from postgres_da_ai_agent.modules import llm
 from postgres_da_ai_agent.modules import orchestrator
-from postgres_da_ai_agent.modules import file
 from postgres_da_ai_agent.agents import agent_config
-import dotenv
-import argparse
 import autogen
 import guidance
 
-# ------------ PROMPTS ------------
+# ------------------------ PROMPTS ------------------------
 
-
-# create our terminate msg function
-def is_termination_msg(content):
-    have_content = content.get("content", None) is not None
-    if have_content and "APPROVED" in content["content"]:
-        return True
-    return False
-
-
-COMPLETION_PROMPT = "If everything looks good, respond with APPROVED"
 
 USER_PROXY_PROMPT = "A human admin. Interact with the Product Manager to discuss the plan. Plan execution needs to be approved by this admin."
 DATA_ENGINEER_PROMPT = "A Data Engineer. Generate the initial SQL based on the requirements provided. Send it to the Sr Data Analyst to be executed. "
 SR_DATA_ANALYST_PROMPT = "Sr Data Analyst. You run the SQL query using the run_sql function, send the raw response to the data viz team. You use the run_sql function exclusively."
-PRODUCT_MANAGER_PROMPT = (
-    "Product Manager. Validate the response to make sure it's correct"
-    + COMPLETION_PROMPT
-)
-
-TEXT_REPORT_ANALYST_PROMPT = "Text File Report Analyst. You exclusively use the write_file function on a summarized report."
-JSON_REPORT_ANALYST_PROMPT = "Json Report Analyst. You exclusively use the write_json_file function on the report."
-YML_REPORT_ANALYST_PROMPT = "Yaml Report Analyst. You exclusively use the write_yml_file function on the report."
 
 
-# Part 1: Defining the guidance as a string
 GUIDANCE_SCRUM_MASTER_SQL_NLQ_PROMPT = """
 Is the following block of text a SQL Natural Language Query (NLQ)? Please rank from 1 to 5, where:
 1: Definitely not NLQ
@@ -52,7 +27,6 @@ Block of Text: {{potential_nlq}}
 {{#select "rank" logprobs='logprobs'}} 1{{or}} 2{{or}} 3{{or}} 4{{or}} 5{{/select}}
 """
 
-# The following is a set of insights in JSON format.
 DATA_INSIGHTS_GUIDANCE_PROMPT = """
 You're a data innovator. You analyze SQL databases table structure and generate 3 novel insights for your team to reflect on and query. 
 Format your insights in JSON format.
@@ -70,8 +44,25 @@ Format your insights in JSON format.
 INSIGHTS_FILE_REPORTER_PROMPT = "You're a data reporter. You write json data you receive directly into a file using the write_innovation_file function."
 
 
-# ------------ AGENTS ------------
+# unused prompts
+COMPLETION_PROMPT = "If everything looks good, respond with APPROVED"
+PRODUCT_MANAGER_PROMPT = (
+    "Product Manager. Validate the response to make sure it's correct"
+    + COMPLETION_PROMPT
+)
+TEXT_REPORT_ANALYST_PROMPT = "Text File Report Analyst. You exclusively use the write_file function on a summarized report."
+JSON_REPORT_ANALYST_PROMPT = "Json Report Analyst. You exclusively use the write_json_file function on the report."
+YML_REPORT_ANALYST_PROMPT = "Yaml Report Analyst. You exclusively use the write_yml_file function on the report."
+
+
+# ------------------------ BUILD AGENT TEAMS ------------------------
+
+
 def build_data_eng_team(instruments: PostgresAgentInstruments):
+    """
+    Build a team of agents that can generate, execute, and report an SQL query
+    """
+
     # create a set of agents with specific roles
     # admin user proxy agent - takes in the prompt and manages the group chat
     user_proxy = autogen.UserProxyAgent(
@@ -99,15 +90,6 @@ def build_data_eng_team(instruments: PostgresAgentInstruments):
         function_map={
             "run_sql": instruments.run_sql,
         },
-    )
-
-    # product manager - validate the response to make sure it's correct
-    product_manager = autogen.AssistantAgent(
-        name="Product_Manager",
-        llm_config=agent_config.base_config,
-        system_message=PRODUCT_MANAGER_PROMPT,
-        code_execution_config=False,
-        human_input_mode="NEVER",
     )
 
     return [
@@ -212,7 +194,7 @@ def build_insights_team(instruments: PostgresAgentInstruments):
     return [user_proxy, insights_agent, insights_data_reporter]
 
 
-# ------------ ORCHESTRATION ------------
+# ------------------------ ORCHESTRATION ------------------------
 
 
 def build_team_orchestrator(
@@ -220,6 +202,9 @@ def build_team_orchestrator(
     agent_instruments: PostgresAgentInstruments,
     validate_results: callable = None,
 ) -> orchestrator.Orchestrator:
+    """
+    Based on a team name, build a team of agents and return an orchestrator
+    """
     if team == "data_eng":
         return orchestrator.Orchestrator(
             name="data_eng_team",
@@ -251,8 +236,14 @@ def build_team_orchestrator(
     raise Exception("Unknown team: " + team)
 
 
-# Part 2: Registering a new reply function in a new agent class
+# ------------------------ CUSTOM AGENTS ------------------------
+
+
 class DefensiveScrumMasterAgent(autogen.ConversableAgent):
+    """
+    Custom agent that uses the guidance function to determine if a message is a SQL NLQ
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Register the new reply function for this specific agent
@@ -280,6 +271,10 @@ class DefensiveScrumMasterAgent(autogen.ConversableAgent):
 
 
 class InsightsAgent(autogen.ConversableAgent):
+    """
+    Custom agent that uses the guidance function to generate insights in JSON format
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.register_reply(self, self.generate_insights, position=0)
