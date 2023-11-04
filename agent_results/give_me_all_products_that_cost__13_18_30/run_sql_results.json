@@ -1,0 +1,324 @@
+[
+    {
+        "product_id": 2,
+        "product_name": "Product 2",
+        "category_id": 3,
+        "price": "84.28",
+        "stock_quantity": 972
+    },
+    {
+        "product_id": 6,
+        "product_name": "Product 6",
+        "category_id": 7,
+        "price": "98.79",
+        "stock_quantity": 55
+    },
+    {
+        "product_id": 9,
+        "product_name": "Product 9",
+        "category_id": 10,
+        "price": "86.75",
+        "stock_quantity": 124
+    },
+    {
+        "product_id": 10,
+        "product_name": "Product 10",
+        "category_id": 1,
+        "price": "61.65",
+        "stock_quantity": 415
+    },
+    {
+        "product_id": 13,
+        "product_name": "Product 13",
+        "category_id": 4,
+        "price": "55.16",
+        "stock_quantity": 961
+    },
+    {
+        "product_id": 14,
+        "product_name": "Product 14",
+        "category_id": 5,
+        "price": "68.68",
+        "stock_quantity": 801
+    },
+    {
+        "product_id": 15,
+        "product_name": "Product 15",
+        "category_id": 6,
+        "price": "64.34",
+        "stock_quantity": 867
+    },
+    {
+        "product_id": 18,
+        "product_name": "Product 18",
+        "category_id": 9,
+        "price": "73.20",
+        "stock_quantity": 559
+    },
+    {
+        "product_id": 19,
+        "product_name": "Product 19",
+        "category_id": 10,
+        "price": "65.90",
+        "stock_quantity": 290
+    },
+    {
+        "product_id": 21,
+        "product_name": "Product 21",
+        "category_id": 2,
+        "price": "74.22",
+        "stock_quantity": 665
+    },
+    {
+        "product_id": 22,
+        "product_name": "Product 22",
+        "category_id": 3,
+        "price": "51.08",
+        "stock_quantity": 436
+    },
+    {
+        "product_id": 24,
+        "product_name": "Product 24",
+        "category_id": 5,
+        "price": "57.92",
+        "stock_quantity": 152
+    },
+    {
+        "product_id": 25,
+        "product_name": "Product 25",
+        "category_id": 6,
+        "price": "94.77",
+        "stock_quantity": 719
+    },
+    {
+        "product_id": 27,
+        "product_name": "Product 27",
+        "category_id": 8,
+        "price": "92.09",
+        "stock_quantity": 485
+    },
+    {
+        "product_id": 28,
+        "product_name": "Product 28",
+        "category_id": 9,
+        "price": "67.90",
+        "stock_quantity": 4
+    },
+    {
+        "product_id": 30,
+        "product_name": "Product 30",
+        "category_id": 1,
+        "price": "66.47",
+        "stock_quantity": 302
+    },
+    {
+        "product_id": 31,
+        "product_name": "Product 31",
+        "category_id": 2,
+        "price": "51.46",
+        "stock_quantity": 781
+    },
+    {
+        "product_id": 33,
+        "product_name": "Product 33",
+        "category_id": 4,
+        "price": "83.05",
+        "stock_quantity": 23
+    },
+    {
+        "product_id": 34,
+        "product_name": "Product 34",
+        "category_id": 5,
+        "price": "92.41",
+        "stock_quantity": 200
+    },
+    {
+        "product_id": 36,
+        "product_name": "Product 36",
+        "category_id": 7,
+        "price": "63.05",
+        "stock_quantity": 303
+    },
+    {
+        "product_id": 41,
+        "product_name": "Product 41",
+        "category_id": 2,
+        "price": "59.39",
+        "stock_quantity": 991
+    },
+    {
+        "product_id": 47,
+        "product_name": "Product 47",
+        "category_id": 8,
+        "price": "77.34",
+        "stock_quantity": 621
+    },
+    {
+        "product_id": 50,
+        "product_name": "Product 50",
+        "category_id": 1,
+        "price": "79.07",
+        "stock_quantity": 629
+    },
+    {
+        "product_id": 51,
+        "product_name": "Product 51",
+        "category_id": 2,
+        "price": "90.52",
+        "stock_quantity": 540
+    },
+    {
+        "product_id": 52,
+        "product_name": "Product 52",
+        "category_id": 3,
+        "price": "70.92",
+        "stock_quantity": 943
+    },
+    {
+        "product_id": 53,
+        "product_name": "Product 53",
+        "category_id": 4,
+        "price": "84.02",
+        "stock_quantity": 787
+    },
+    {
+        "product_id": 56,
+        "product_name": "Product 56",
+        "category_id": 7,
+        "price": "94.97",
+        "stock_quantity": 236
+    },
+    {
+        "product_id": 57,
+        "product_name": "Product 57",
+        "category_id": 8,
+        "price": "54.93",
+        "stock_quantity": 168
+    },
+    {
+        "product_id": 58,
+        "product_name": "Product 58",
+        "category_id": 9,
+        "price": "76.59",
+        "stock_quantity": 804
+    },
+    {
+        "product_id": 59,
+        "product_name": "Product 59",
+        "category_id": 10,
+        "price": "51.19",
+        "stock_quantity": 754
+    },
+    {
+        "product_id": 60,
+        "product_name": "Product 60",
+        "category_id": 1,
+        "price": "66.34",
+        "stock_quantity": 127
+    },
+    {
+        "product_id": 61,
+        "product_name": "Product 61",
+        "category_id": 2,
+        "price": "98.37",
+        "stock_quantity": 595
+    },
+    {
+        "product_id": 63,
+        "product_name": "Product 63",
+        "category_id": 4,
+        "price": "54.57",
+        "stock_quantity": 298
+    },
+    {
+        "product_id": 70,
+        "product_name": "Product 70",
+        "category_id": 1,
+        "price": "80.46",
+        "stock_quantity": 150
+    },
+    {
+        "product_id": 71,
+        "product_name": "Product 71",
+        "category_id": 2,
+        "price": "50.80",
+        "stock_quantity": 544
+    },
+    {
+        "product_id": 75,
+        "product_name": "Product 75",
+        "category_id": 6,
+        "price": "67.88",
+        "stock_quantity": 434
+    },
+    {
+        "product_id": 81,
+        "product_name": "Product 81",
+        "category_id": 2,
+        "price": "52.10",
+        "stock_quantity": 951
+    },
+    {
+        "product_id": 83,
+        "product_name": "Product 83",
+        "category_id": 4,
+        "price": "90.05",
+        "stock_quantity": 485
+    },
+    {
+        "product_id": 84,
+        "product_name": "Product 84",
+        "category_id": 5,
+        "price": "85.16",
+        "stock_quantity": 23
+    },
+    {
+        "product_id": 85,
+        "product_name": "Product 85",
+        "category_id": 6,
+        "price": "52.95",
+        "stock_quantity": 175
+    },
+    {
+        "product_id": 89,
+        "product_name": "Product 89",
+        "category_id": 10,
+        "price": "99.50",
+        "stock_quantity": 166
+    },
+    {
+        "product_id": 90,
+        "product_name": "Product 90",
+        "category_id": 1,
+        "price": "55.74",
+        "stock_quantity": 294
+    },
+    {
+        "product_id": 91,
+        "product_name": "Product 91",
+        "category_id": 2,
+        "price": "99.44",
+        "stock_quantity": 232
+    },
+    {
+        "product_id": 93,
+        "product_name": "Product 93",
+        "category_id": 4,
+        "price": "96.22",
+        "stock_quantity": 919
+    },
+    {
+        "product_id": 94,
+        "product_name": "Product 94",
+        "category_id": 5,
+        "price": "87.16",
+        "stock_quantity": 774
+    },
+    {
+        "product_id": 98,
+        "product_name": "Product 98",
+        "category_id": 9,
+        "price": "84.15",
+        "stock_quantity": 34
+    }
+]

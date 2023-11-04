@@ -1,0 +1,7 @@
+[
+    {
+        "from_name": "Admin",
+        "to_name": "Scrum_Master",
+        "message": "Fulfill this database query: give me all 'Failed' jobs. "
+    }
+]

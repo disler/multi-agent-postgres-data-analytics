@@ -1,0 +1,17 @@
+[
+{
+    "insight": "Identify the most popular products that cost more than 50",
+    "actionable_business_value": "This will help in understanding customer preferences and can be used to drive marketing strategies.",
+    "sql": "SELECT product_id, COUNT(*) as order_count FROM orders JOIN products ON orders.product_id = products.product_id WHERE products.price > 50 GROUP BY product_id ORDER BY order_count DESC LIMIT 10"
+},
+{
+    "insight": "Find out the suppliers who supply products that cost more than 50",
+    "actionable_business_value": "This can help in negotiating better deals with these suppliers or identifying alternative suppliers for cost reduction.",
+    "sql": "SELECT DISTINCT supplier_id FROM supplier_products JOIN products ON supplier_products.product_id = products.product_id WHERE products.price > 50"
+},
+{
+    "insight": "Identify the categories of products that cost more than 50",
+    "actionable_business_value": "This can help in understanding which categories are more profitable and can guide inventory management decisions.",
+    "sql": "SELECT DISTINCT category_id FROM products WHERE price > 50"
+}
+]
