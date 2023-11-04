@@ -1,5 +1,7 @@
 # Multi-Agent Postgres Data Analytics
-*The way we interact with our data is changing*
+*The way we interact with our data is changing.*
+
+![Multi-Agent Postgres Data Analytics](imgs/2-using-autogen-to-build-our-multi-agent-postgres-data-analytics-tool.png)
 
 ## Setup
 - poetry install
