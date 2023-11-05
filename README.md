@@ -8,7 +8,7 @@
 >
 > It is **ONE** of **MANY** steps toward building fully autonomous, Agentic software.
 > 
-> It is **NOT** a framework, or library, or shortcut. It's a **_stepping stone_** to help you internalize concepts, patterns and building blocks for your own multi-agent systems and applications.
+> It is **NOT** a framework, or library, or shortcut. It **IS** a **_stepping stone_** to help you internalize concepts, patterns and building blocks for your own multi-agent systems and applications.
 >
 > Code only tells a story at a moment in time. I highly recommend you watch the [video series](https://www.youtube.com/playlist?list=PLS_o2ayVCKvDzj2YxeFqMq9UbR1PkPEh0) to see how and why this experimental codebase is structured as it is. 
 > 

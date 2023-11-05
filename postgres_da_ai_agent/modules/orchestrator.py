@@ -81,7 +81,7 @@ class Orchestrator:
         Run the validate_results_func if it exists
         """
         if self.validate_results_func:
-            return self.validate_results_func(self.messages)
+            return self.validate_results_func()
         return True, ""
 
     def send_message(
