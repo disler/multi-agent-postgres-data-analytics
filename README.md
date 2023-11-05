@@ -62,30 +62,42 @@ Throughout the codebase we built up several existing and new patterns and termin
 ### [Part 1 - Prompt Engineering an ENTIRE codebase: Postgres Data Analytics Al Agent](https://youtu.be/jmDMusirPKA)
 Branch: [v1-prompt-engineering-an-entire-codebase](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v1-prompt-engineering-an-entire-codebase)
 
+Video: [https://youtu.be/jmDMusirPKA](https://youtu.be/jmDMusirPKA)
+
 <img src="imgs/1-prompt-engineering-postgres-ai-data-analytics-agent.png" width="300" height="auto">
 
 ### [Part 2 - One Prompt is NOT enough: Using AutoGen to code a Multi-Agent Postgres AI Tool](https://youtu.be/JjVvYDPVrAQ)
 Branch: [v2-using-autogen-to-build-our-multi-agent-tool](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v2-using-autogen-to-build-our-multi-agent-tool)
+
+Video: [https://youtu.be/JjVvYDPVrAQ](https://youtu.be/JjVvYDPVrAQ)
 
 <img src="imgs/2-using-autogen-to-build-our-multi-agent-postgres-data-analytics-tool.png" width="300" height="auto">
 
 ### [Part 3 - Make AutoGen Consistent: CONTROL your LLM agents for ACCURATE Postgres Al Data Analytics](https://youtu.be/4o8tymMQ5GM)
 Branch: [v3-make-autogen-consistent-control-your-llm](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v3-make-autogen-consistent-control-your-llm)
 
+Video: [https://youtu.be/4o8tymMQ5GM](https://youtu.be/4o8tymMQ5GM)
+
 <img src="imgs/3-make-autogen-consistent-to-build-our-multi-agent-postgres-data-analytics-tool.png" width="300" height="auto">
 
 ### [Part 4 - AutoGen Token Tactics: FIRING AI Agents, USELESS Vector Embeddings, GPT-4 Memory Tricks](https://youtu.be/CKo-czvxFkY)
 Branch: [v4-autogen-token-tactics-firing-ai-agents](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v4-autogen-token-tactics-firing-ai-agents)
+
+Video: [https://youtu.be/CKo-czvxFkY](https://youtu.be/CKo-czvxFkY)
 
 <img src="imgs/4-autogen-token-tactics-managing-llm-memory-and-costs-multi-agent-postgres-ai-data-analytics.png" width="300" height="auto">
 
 ### [Part 5 - AutoGen SPYWARE: Coding Systems for SUCCESSFUL AI Agents (Postgres Data Analytics)](https://youtu.be/UA6IVMDPuC8)
 Branch: [v5-autogen-spyware-coding-systems-for-successful-ai](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v5-autogen-spyware-coding-systems-for-successful-ai)
 
+Video: [https://youtu.be/UA6IVMDPuC8](https://youtu.be/UA6IVMDPuC8)
+
 <img src="imgs/5-autogen-spyware-for-ai-agents-postgres-data-analytics-tool-ai.png" width="300" height="auto">
 
 ### [Part 6 - Using AUTOGEN & GUIDANCE to code LLM Control Flow & JSON Agents (No Prompt Engineering)](https://youtu.be/XGCWyfA3rgQ)
 Branch: [v6-control-flow-and-structured-response](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v6-control-flow-and-structured-response)
+
+Video: [https://youtu.be/XGCWyfA3rgQ](https://youtu.be/XGCWyfA3rgQ)
 
 <img src="imgs/6-autogen-and-guidance-for-autonomous-control-flow.png" width="300" height="auto">
 
