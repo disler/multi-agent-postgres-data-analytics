@@ -8,13 +8,15 @@
 >
 > It is **ONE** of **MANY** steps toward building fully autonomous, Agentic software.
 > 
-> It is **NOT** a framework, or library, or shortcut. It **IS** a **_stepping stone_** to help you internalize concepts, patterns and building blocks for your own multi-agent systems and applications.
+> It is **NOT** a framework, or library, or shortcut. 
+> 
+> It **IS** a **_stepping stone_** to help you internalize concepts, patterns and building blocks for your own multi-agent systems and applications.
 >
-> Code only tells a story at a moment in time. I highly recommend you watch the [video series](https://www.youtube.com/playlist?list=PLS_o2ayVCKvDzj2YxeFqMq9UbR1PkPEh0) to see how and why this experimental codebase is structured as it is. 
+> Code only tells a story at a moment in time. I highly recommend you watch the [video series](https://www.youtube.com/playlist?list=PLS_o2ayVCKvDzj2YxeFqMq9UbR1PkPEh0) to see the **how and the why** behind the structure of this experimental codebase.
 > 
 > In the series we build this from scratch and dive deep into complexities, principles, patterns and ideas surrounding multi-agent software. The video order is linked below, mapping branches to videos.
 >
-> This repo will not be maintained or updated. It is a snapshot in time of the code we built in the video series and is meant only to be a reference for you on your journey to building your own multi-agent systems, **_nothing more_**.
+> This repo will not be maintained or updated beyond the lifespan of the series. It is a snapshot in time of the code we built in the video series and is meant only to be a reference for you on your journey to building your own multi-agent systems, **_nothing more_**.
 
 
 ## 💻 Multi-Agent Postgres Data Analytics Tool 💻
@@ -44,30 +46,39 @@ Throughout the codebase we built up several existing and new patterns and termin
   - `poetry run start --prompt "<ask your agent a question about your postgres database>"`
     - Start with something simple to get a feel for it and then build up to more complex questions.
 
-## 📺 Video Series - Learn Faster 📺
-- [Part 1 - Prompt Engineering an ENTIRE codebase: Postgres Data Analytics Al Agent](https://youtu.be/jmDMusirPKA)
-  - Branch: `v1-prompt-engineering-an-entire-codebase`
-  ![Part 1 Image](6-autogen-and-guidance-for-autonomous-control-flow.png)
-- [Part 2 - One Prompt is NOT enough: Using AutoGen to code a Multi-Agent Postgres AI Tool](https://youtu.be/JjVvYDPVrAQ)
-  - Branch: `v2-using-autogen-to-build-our-multi-agent-tool`
-  - Video
-- [Part 3 - Make AutoGen Consistent: CONTROL your LLM agents for ACCURATE Postgres Al Data Analytics](https://youtu.be/4o8tymMQ5GM)
-  - Branch: `v3-make-autogen-consistent-control-your-llm`
-  - Video
-- [Part 4 - AutoGen Token Tactics: FIRING AI Agents, USELESS Vector Embeddings, GPT-4 Memory Tricks](https://youtu.be/CKo-czvxFkY)
-  - Branch: `v4-autogen-token-tactics-firing-ai-agents`
-  - Video
-- [Part 5 - AutoGen SPYWARE: Coding Systems for SUCCESSFUL AI Agents (Postgres Data Analytics)](https://youtu.be/UA6IVMDPuC8)
-  - Branch: `v5-autogen-spyware-coding-systems-for-successful-ai`
-  - Video
+## 📺 Video Series - Learn By Watching 📺
 
+### [Part 1 - Prompt Engineering an ENTIRE codebase: Postgres Data Analytics Al Agent](https://youtu.be/jmDMusirPKA)
+Branch: [v1-prompt-engineering-an-entire-codebase](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v1-prompt-engineering-an-entire-codebase)
+
+<img src="imgs/1-prompt-engineering-postgres-ai-data-analytics-agent.png" width="300" height="auto">
+
+### [Part 2 - One Prompt is NOT enough: Using AutoGen to code a Multi-Agent Postgres AI Tool](https://youtu.be/JjVvYDPVrAQ)
+Branch: [v2-using-autogen-to-build-our-multi-agent-tool](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v2-using-autogen-to-build-our-multi-agent-tool)
+
+<img src="imgs/2-using-autogen-to-build-our-multi-agent-postgres-data-analytics-tool.png" width="300" height="auto">
+
+### [Part 3 - Make AutoGen Consistent: CONTROL your LLM agents for ACCURATE Postgres Al Data Analytics](https://youtu.be/4o8tymMQ5GM)
+Branch: [v3-make-autogen-consistent-control-your-llm](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v3-make-autogen-consistent-control-your-llm)
+
+<img src="imgs/3-make-autogen-consistent-to-build-our-multi-agent-postgres-data-analytics-tool.png" width="300" height="auto">
+
+### [Part 4 - AutoGen Token Tactics: FIRING AI Agents, USELESS Vector Embeddings, GPT-4 Memory Tricks](https://youtu.be/CKo-czvxFkY)
+Branch: [v4-autogen-token-tactics-firing-ai-agents](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v4-autogen-token-tactics-firing-ai-agents)
+
+<img src="imgs/4-autogen-token-tactics-managing-llm-memory-and-costs-multi-agent-postgres-ai-data-analytics.png" width="300" height="auto">
+
+### [Part 5 - AutoGen SPYWARE: Coding Systems for SUCCESSFUL AI Agents (Postgres Data Analytics)](https://youtu.be/UA6IVMDPuC8)
+Branch: [v5-autogen-spyware-coding-systems-for-successful-ai](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v5-autogen-spyware-coding-systems-for-successful-ai)
+
+<img src="imgs/5-autogen-spyware-for-ai-agents-postgres-data-analytics-tool-ai.png" width="300" height="auto">
 
 ### [Part 6 - Using AUTOGEN & GUIDANCE to code LLM Control Flow & JSON Agents (No Prompt Engineering)](https://youtu.be/XGCWyfA3rgQ)
 Branch: `v6-control-flow-and-structured-response`
 
 <img src="imgs/6-autogen-and-guidance-for-autonomous-control-flow.png" width="300" height="auto">
 
-
+---
 
 # 🧠 Major Learnings 🧠
 
