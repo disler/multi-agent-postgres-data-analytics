@@ -31,7 +31,7 @@ It's the first of many multi-agent applications that utilize LLMs (large languag
 ## 💻 Setup 💻
 - **Read the codebase first**. Remember, this is an experiment and learning tool. It's not meant to be a framework or library.
 - `poetry install`
-- `cp .env.example .env`
+- `cp .env.sample .env`
 - Fill out `.env` with your postgres url and openai api key
 - Run a prompt against your database
   - `poetry run start --prompt "<ask your agent a question about your postgres database>"`
