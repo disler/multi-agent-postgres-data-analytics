@@ -32,7 +32,7 @@ Throughout the codebase we built up several existing and new patterns and termin
 - **Conversation Flows** - The way agents communicate with each other. How you're agents communicate completely changes the way your application works. The conversation flow dictates which agent speaks, the order in which they speak, who they speak to and what they say.
 - **Orchestrator** - Manages a single agent team, their conversations and their output. Orchestrators contain different types of conversation flows.
 - **Instruments** - Instruments are the tools agents can use. Think of it like a front-end store. It contains state and functions that both agents and orchestrators can utilize throughout the lifecycle of the application. Agents and Orchestrators can consume and manipulate the state of instruments although typically, only agents update state.
-- **Decision Agents** - Agents that respond with concrete decisions which can dictate the flow of your applications.
+- **Decision Agents** - Agents that respond with concrete decisions which can dictate the flow of your applications. To build complex agentic systems you need agents to have the ability to make concrete decisions that then drive the flow of your application.
 - **Structured vs Unstructured Agents** - Structured agents are agents that respond with structured data. Unstructured agents are agents that respond with unstructured data. Structured agents are typically decision agents.
 
 
@@ -45,24 +45,27 @@ Throughout the codebase we built up several existing and new patterns and termin
     - Start with something simple to get a feel for it and then build up to more complex questions.
 
 ## 📺 Video Series - Learn Faster 📺
-- [Part 1 - Prompt Engineering an ENTIRE codebase: Postgres Data Analytics Al Agent](qqq)
+- [Part 1 - Prompt Engineering an ENTIRE codebase: Postgres Data Analytics Al Agent](https://youtu.be/jmDMusirPKA)
   - Branch: `v1-prompt-engineering-an-entire-codebase`
-  - Video
-- [Part 2 - One Prompt is NOT enough: Using AutoGen to code a Multi-Agent Postgres AI Tool](qqq)
+  ![Part 1 Image](6-autogen-and-guidance-for-autonomous-control-flow.png)
+- [Part 2 - One Prompt is NOT enough: Using AutoGen to code a Multi-Agent Postgres AI Tool](https://youtu.be/JjVvYDPVrAQ)
   - Branch: `v2-using-autogen-to-build-our-multi-agent-tool`
   - Video
-- [Part 3 - Make AutoGen Consistent: CONTROL your LLM agents for ACCURATE Postgres Al Data Analytics](qqq)
+- [Part 3 - Make AutoGen Consistent: CONTROL your LLM agents for ACCURATE Postgres Al Data Analytics](https://youtu.be/4o8tymMQ5GM)
   - Branch: `v3-make-autogen-consistent-control-your-llm`
   - Video
-- [Part 4 - AutoGen Token Tactics: FIRING AI Agents, USELESS Vector Embeddings, GPT-4 Memory Tricks](qqq)
+- [Part 4 - AutoGen Token Tactics: FIRING AI Agents, USELESS Vector Embeddings, GPT-4 Memory Tricks](https://youtu.be/CKo-czvxFkY)
   - Branch: `v4-autogen-token-tactics-firing-ai-agents`
   - Video
-- [Part 5 - AutoGen SPYWARE: Coding Systems for SUCCESSFUL AI Agents (Postgres Data Analytics)](qqq)
+- [Part 5 - AutoGen SPYWARE: Coding Systems for SUCCESSFUL AI Agents (Postgres Data Analytics)](https://youtu.be/UA6IVMDPuC8)
   - Branch: `v5-autogen-spyware-coding-systems-for-successful-ai`
   - Video
-- [Part 6 - qqq](qqq)
-  - Branch: `v6-control-flow-and-structured-response`
-  - Video
+
+
+### [Part 6 - Using AUTOGEN & GUIDANCE to code LLM Control Flow & JSON Agents (No Prompt Engineering)](https://youtu.be/XGCWyfA3rgQ)
+Branch: `v6-control-flow-and-structured-response`
+
+<img src="imgs/6-autogen-and-guidance-for-autonomous-control-flow.png" width="300" height="auto">
 
 
 
