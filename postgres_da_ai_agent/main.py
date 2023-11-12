@@ -111,30 +111,30 @@ def main():
 
         # ----------- Data Eng Team: Based on a sql table definitions and a prompt create an sql statement and execute it -------------
 
-        # data_eng_orchestrator = agents.build_team_orchestrator(
-        #     "data_eng",
-        #     agent_instruments,
-        #     validate_results=agent_instruments.validate_run_sql,
-        # )
+        data_eng_orchestrator = agents.build_team_orchestrator(
+            "data_eng",
+            agent_instruments,
+            validate_results=agent_instruments.validate_run_sql,
+        )
 
-        # data_eng_conversation_result: ConversationResult = (
-        #     data_eng_orchestrator.sequential_conversation(prompt)
-        # )
+        data_eng_conversation_result: ConversationResult = (
+            data_eng_orchestrator.sequential_conversation(prompt)
+        )
 
-        # match data_eng_conversation_result:
-        #     case ConversationResult(
-        #         success=True, cost=data_eng_cost, tokens=data_eng_tokens
-        #     ):
-        #         print(
-        #             f"✅ Orchestrator was successful. Team: {data_eng_orchestrator.name}"
-        #         )
-        #         print(
-        #             f"💰📊🤖 {data_eng_orchestrator.name} Cost: {data_eng_cost}, tokens: {data_eng_tokens}"
-        #         )
-        #     case _:
-        #         print(
-        #             f"❌ Orchestrator failed. Team: {data_eng_orchestrator.name} Failed"
-        #         )
+        match data_eng_conversation_result:
+            case ConversationResult(
+                success=True, cost=data_eng_cost, tokens=data_eng_tokens
+            ):
+                print(
+                    f"✅ Orchestrator was successful. Team: {data_eng_orchestrator.name}"
+                )
+                print(
+                    f"💰📊🤖 {data_eng_orchestrator.name} Cost: {data_eng_cost}, tokens: {data_eng_tokens}"
+                )
+            case _:
+                print(
+                    f"❌ Orchestrator failed. Team: {data_eng_orchestrator.name} Failed"
+                )
 
         # ----------- Data Insights Team: Based on sql table definitions and a prompt generate novel insights -------------
 
