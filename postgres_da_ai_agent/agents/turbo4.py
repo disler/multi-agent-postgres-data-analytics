@@ -49,6 +49,8 @@ class Turbo4:
     def tool_config(self):
         return [tool.config for tool in self.map_function_tools.values()]
 
+    # ------------- Additional Utility Functions -----------------
+
     def run_validation(self, validation_func: Callable):
         print(f"run_validation({validation_func.__name__})")
         validation_func()
@@ -96,17 +98,7 @@ class Turbo4:
 
         return self
 
-    def set_instructions(self, instructions: str):
-        print(f"set_instructions()")
-        if self.assistant_id is None:
-            raise ValueError(
-                "No assistant has been created or retrieved. Call get_or_create_assistant() first."
-            )
-        # Update the assistant with the new instructions
-        updated_assistant = self.client.beta.assistants.update(
-            assistant_id=self.assistant_id, instructions=instructions
-        )
-        return self
+    # ------------- CORE ASSISTANTS API FUNCTIONS -----------------
 
     def get_or_create_assistant(self, name: str, model: str = "gpt-4-1106-preview"):
         print(f"get_or_create_assistant({name}, {model})")
@@ -133,6 +125,18 @@ class Turbo4:
 
         return self
 
+    def set_instructions(self, instructions: str):
+        print(f"set_instructions()")
+        if self.assistant_id is None:
+            raise ValueError(
+                "No assistant has been created or retrieved. Call get_or_create_assistant() first."
+            )
+        # Update the assistant with the new instructions
+        updated_assistant = self.client.beta.assistants.update(
+            assistant_id=self.assistant_id, instructions=instructions
+        )
+        return self
+
     def equip_tools(
         self, turbo_tools: List[TurboTool], equip_on_assistant: bool = False
     ):
@@ -150,20 +154,6 @@ class Turbo4:
             updated_assistant = self.client.beta.assistants.update(
                 tools=self.tool_config, assistant_id=self.assistant_id
             )
-
-        return self
-
-    def enable_retrieval(self):
-        print(f"enable_retrieval()")
-        if self.assistant_id is None:
-            raise ValueError(
-                "No assistant has been created or retrieved. Call get_or_create_assistant() first."
-            )
-
-        # Update the assistant with the new list of tools, replacing any existing tools
-        updated_assistant = self.client.beta.assistants.update(
-            tools=[{"type": "retrieval"}], assistant_id=self.assistant_id
-        )
 
         return self
 
@@ -278,3 +268,22 @@ class Turbo4:
                 return self
 
             time.sleep(self.polling_interval)  # Wait a little before polling again
+
+    def enable_retrieval(self):
+        print(f"enable_retrieval()")
+        if self.assistant_id is None:
+            raise ValueError(
+                "No assistant has been created or retrieved. Call get_or_create_assistant() first."
+            )
+
+        # Update the assistant with the new list of tools, replacing any existing tools
+        updated_assistant = self.client.beta.assistants.update(
+            tools=[{"type": "retrieval"}], assistant_id=self.assistant_id
+        )
+
+        return self
+
+    # Future versions:
+
+    # enable code interpreter
+    # crud files

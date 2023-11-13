@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 from typing import Callable, List
+from dataclasses import dataclass, field
+import time
 
 
 @dataclass
@@ -7,7 +9,7 @@ class Chat:
     from_name: str
     to_name: str
     message: str
-    created: int
+    created: int = field(default_factory=time.time)
 
 
 @dataclass

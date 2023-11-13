@@ -105,6 +105,8 @@ def main():
             )
         )
 
+        print(f"✅ Turbo4 Assistant finished.")
+
         # ---------- Simple Prompt Solution - Same thing, only 2 api calls instead of 8+ ------------
         # sql_response = llm.prompt(
         #     prompt,
@@ -119,6 +121,18 @@ def main():
         #     turbo_tools=tools,
         # )
         # agent_instruments.validate_run_sql()
+
+        # ----------- Example use case of Turbo4 and the Assistants API ------------
+
+        # (
+        #     assistant.get_or_create_assistant(assistant_name)
+        #     .make_thread()
+        #     .equip_tools(tools)
+        #     .add_message("Generate 10 random facts about LLM technology.")
+        #     .run_thread()
+        #     .add_message("Use the store_fact function to 1 fact.")
+        #     .run_thread(toolbox=["store_fact"])
+        # )
 
 
 if __name__ == "__main__":

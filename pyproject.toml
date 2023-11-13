@@ -25,5 +25,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-start = "postgres_da_ai_agent.main:main"
+# Not available in current version due to pyautogen not supporting openai ^1.2.3
+# old_start = "postgres_da_ai_agent.main:main"
+start = "postgres_da_ai_agent.turbo_main:main"
 turbo = "postgres_da_ai_agent.turbo_main:main"

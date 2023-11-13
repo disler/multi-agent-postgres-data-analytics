@@ -185,8 +185,6 @@ Example bash command:
         response_format={"type": "json_object"},
     )
 
-    print("response", response)
-
     return response_parser(response.model_dump())
 
 

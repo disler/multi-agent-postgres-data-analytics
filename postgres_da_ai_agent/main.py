@@ -1,3 +1,7 @@
+"""
+Heads up: in v7 pyautogen doesn't work with the latest openai version so this file has been commented out via pyproject.toml
+"""
+
 import os
 from postgres_da_ai_agent.agents.instruments import PostgresAgentInstruments
 from postgres_da_ai_agent.modules.db import PostgresManager

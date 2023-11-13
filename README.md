@@ -101,7 +101,12 @@ Video: [https://youtu.be/XGCWyfA3rgQ](https://youtu.be/XGCWyfA3rgQ)
 
 <img src="imgs/6-autogen-and-guidance-for-autonomous-control-flow.png" width="300" height="auto">
 
-### [Part 7 - UNRELEASED](#)
+### [Part 7 - OpenAI Macro & Micro Strategy: Master Assistants API, Threads, Messages, and Runs](https://youtu.be/KwcrjP3vuy0)
+Branch: [v7-turbo4-assistants-threads-messages](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v7-turbo4-assistants-threads-messages)
+
+Video: [https://youtu.be/KwcrjP3vuy0](https://youtu.be/KwcrjP3vuy0)
+
+<img src="imgs/7-turbo4-assistants-threads-messages.png" width="300" height="auto">
 
 ### [Part 8 - UNRELEASED](#)
 
