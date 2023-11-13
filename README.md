@@ -24,12 +24,14 @@
 ## 💻 Multi-Agent Postgres Data Analytics Tool 💻
 This is a multi-agent system that allows you to ask questions about your postgres database in natural language.
 
-The codebase is powered by GPT-4, AutoGen, Postgres, and Guidance.
+The codebase is powered by GPT-4, Assistance API, AutoGen, Postgres, and Guidance.
 
 It's the first of many multi-agent applications that utilize LLMs (large language models) to enable reasoning and decision making with reduced need for explicit rules or logic.
 
 ## 💻 Setup 💻
 - **Read the codebase first**. Remember, this is an experiment and learning tool. It's not meant to be a framework or library.
+- Run `git branch -a` to view all branches. Each branch is a video in the series.
+  - `git checkout <branch-name>` you want to view.
 - `poetry install`
 - `cp .env.sample .env`
 - Fill out `.env` with your postgres url and openai api key
@@ -38,7 +40,7 @@ It's the first of many multi-agent applications that utilize LLMs (large languag
     - Start with something simple to get a feel for it and then build up to more complex questions.
 
 ## 🛠️ Core Tech Stack 🛠️
-- [OpenAI](https://openai.com/) - GPT-4
+- [OpenAI](https://openai.com/) - GPT-4, GPT-4 Turbo, Assistance API
 - [AutoGen](https://microsoft.github.io/autogen/) - Multi-Agent Framework
 - [Postgres](https://www.postgresql.org/) - Database
 - [Guidance](https://github.com/guidance-ai/guidance) - Structured LLM Responses
@@ -101,7 +103,12 @@ Video: [https://youtu.be/XGCWyfA3rgQ](https://youtu.be/XGCWyfA3rgQ)
 
 <img src="imgs/6-autogen-and-guidance-for-autonomous-control-flow.png" width="300" height="auto">
 
-### [Part 7 - UNRELEASED](#)
+### [Part 7 - OpenAI Macro & Micro Strategy: Master Assistants API, Threads, Messages, and Runs](https://youtu.be/KwcrjP3vuy0)
+Branch: [v7-turbo4-assistants-threads-messages](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v7-turbo4-assistants-threads-messages)
+
+Video: [https://youtu.be/KwcrjP3vuy0](https://youtu.be/KwcrjP3vuy0)
+
+<img src="imgs/7-turbo4-assistants-threads-messages.png" width="300" height="auto">
 
 ### [Part 8 - UNRELEASED](#)
 
