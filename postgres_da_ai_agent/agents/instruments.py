@@ -29,6 +29,9 @@ class AgentInstruments:
     def make_agent_chat_file(self, team_name: str):
         return os.path.join(self.root_dir, f"agent_chats_{team_name}.json")
 
+    def make_agent_cost_file(self, team_name: str):
+        return os.path.join(self.root_dir, f"agent_cost_{team_name}.json")
+
     @property
     def root_dir(self):
         return os.path.join(BASE_DIR, self.session_id)
@@ -105,6 +108,10 @@ class PostgresAgentInstruments(AgentInstruments):
     def run_sql_results_file(self):
         return self.get_file_path("run_sql_results.json")
 
+    @property
+    def sql_query_file(self):
+        return self.get_file_path("sql_query.sql")
+
     # -------------------------- Agent Functions -------------------------- #
 
     def run_sql(self, sql: str) -> str:
@@ -118,6 +125,9 @@ class PostgresAgentInstruments(AgentInstruments):
         # dump these results to a file
         with open(fname, "w") as f:
             f.write(results_as_json)
+
+        with open(self.sql_query_file, "w") as f:
+            f.write(sql)
 
         return "Successfully delivered results to json file"
 

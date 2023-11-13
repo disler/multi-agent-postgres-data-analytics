@@ -1,6 +1,8 @@
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import BertTokenizer, BertModel
 
+from postgres_da_ai_agent.modules.db import PostgresManager
+
 
 class DatabaseEmbedder:
     """
@@ -8,11 +10,30 @@ class DatabaseEmbedder:
     computing similarity between user queries and table definitions.
     """
 
-    def __init__(self):
+    def __init__(self, db: PostgresManager):
         self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
         self.model = BertModel.from_pretrained("bert-base-uncased")
         self.map_name_to_embeddings = {}
         self.map_name_to_table_def = {}
+        self.db = db
+
+    def get_similar_table_defs_for_prompt(self, prompt: str, n_similar=5, n_foreign=0):
+        map_table_name_to_table_def = self.db.get_table_definition_map_for_embeddings()
+        for name, table_def in map_table_name_to_table_def.items():
+            self.add_table(name, table_def)
+
+        similar_tables = self.get_similar_tables(prompt, n=n_similar)
+
+        table_definitions = self.get_table_definitions_from_names(similar_tables)
+
+        if n_foreign > 0:
+            foreign_table_names = self.db.get_foreign_tables(similar_tables, n=3)
+
+            table_definitions = self.get_table_definitions_from_names(
+                foreign_table_names + similar_tables
+            )
+
+        return table_definitions
 
     def add_table(self, table_name: str, text_representation: str):
         """
