@@ -116,6 +116,9 @@ Branch: [v8-ccc-ai-engineering-with-aider](https://github.com/disler/multi-agent
 
 Video: [https://youtu.be/7EA19-D4-Zo](https://youtu.be/7EA19-D4-Zo)
 
+<img src="imgs/8-ccc-ai-engineering-with-aider.png" width="300" height="auto">
+
+
 ### [Part 9 - UNRELEASED](#)
 
 ### [Part 10 - UNRELEASED](#)
