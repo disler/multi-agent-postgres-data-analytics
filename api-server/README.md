@@ -1,0 +1,11 @@
+### Setup
+- Copy .env.sample to .env and fill in the values
+  - `cp .env.sample .env`
+- Create python environment
+  - `python -m venv venv`
+- Activate python environment
+  - `source venv/bin/activate`
+- Install dependencies
+  - `pip install -r requirements.txt`
+- Run the server
+  - `python api/index.py`

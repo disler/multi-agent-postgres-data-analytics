@@ -2,6 +2,12 @@
 
 This template should help get you started developing with Svelte and TypeScript in Vite.
 
+## Setup
+- Install Dependencies
+  - `bun install`
+- Start the dev server
+  - `bun run dev`
+
 ## Recommended IDE Setup
 
 [VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
