@@ -1,0 +1,4 @@
+Flask==3.0.0
+openai
+psycopg2-binary
+python-dotenv
