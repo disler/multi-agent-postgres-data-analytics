@@ -1,0 +1,20 @@
+.aider.ident.cache.v1
+.aider.tags.cache.v1
+.aider.chat.history.md
+.aider.input.history
+
+agent_results/*
+
+.vercel
+*.log
+*.pyc
+__pycache__
+
+# Environments 
+.env 
+.venv 
+env/ 
+venv/ 
+ENV/ 
+env.bak/ 
+venv.bak/ 

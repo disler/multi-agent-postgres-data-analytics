@@ -3,7 +3,7 @@
 .aider.chat.history.md
 .aider.input.history
 
-
+node_modules/
 agent_results/
 
 .env
