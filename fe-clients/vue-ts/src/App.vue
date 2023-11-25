@@ -15,7 +15,7 @@
     <input
       type="text"
       v-model="prompt"
-      :disabled="loading" // Disable input when loading
+      :disabled="loading"
       placeholder="Enter your prompt"
       @keyup.enter="sendPrompt"
     />
