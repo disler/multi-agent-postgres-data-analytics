@@ -74,6 +74,8 @@ const sendPrompt = async () => {
     prompt.value = ""; // Clear the prompt input after submission
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);
+  } finally {
+    loading.value = false; // Stop loading
   }
 };
 </script>
