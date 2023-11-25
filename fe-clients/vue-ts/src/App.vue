@@ -6,8 +6,8 @@
     <a href="https://vuejs.org/" target="_blank">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
-    <h1>Framework: Vue-TS</h1>
-    <h2>TTYDB Prototype</h2>
+    <h2>Talk To Your Database (Prototype)</h2>
+    <h3>Framework: Vue-TS</h3>
 
     <input
       type="text"
@@ -36,7 +36,9 @@ interface PromptResult {
 const prompt = ref("");
 
 // code: load this from local storage or default to empty list
-const promptResults = ref<PromptResult[]>(JSON.parse(localStorage.getItem('promptResults') || '[]'));
+const promptResults = ref<PromptResult[]>(
+  JSON.parse(localStorage.getItem("promptResults") || "[]")
+);
 
 const sendPrompt = async () => {
   if (prompt.value.trim() === "") return;
@@ -52,7 +54,7 @@ const sendPrompt = async () => {
     const data = await response.json();
     data.results = JSON.parse(data.results); // Assuming 'results' is a JSON string that needs to be parsed
     promptResults.value.push(data);
-    localStorage.setItem('promptResults', JSON.stringify(promptResults.value));
+    localStorage.setItem("promptResults", JSON.stringify(promptResults.value));
     // code: save this to local storage
     prompt.value = ""; // Clear the prompt input after submission
   } catch (error) {
@@ -76,6 +78,7 @@ code {
 input,
 button {
   padding: 0.5em 1em;
+  text-align: center;
 }
 
 pre {

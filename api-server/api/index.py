@@ -9,6 +9,8 @@ from modules.models import TurboTool
 
 app = Flask(__name__)
 
+# ---------------- .Env Constants ----------------
+
 dotenv.load_dotenv()
 
 assert os.environ.get("DATABASE_URL"), "POSTGRES_CONNECTION_URL not found in .env file"
@@ -17,20 +19,22 @@ assert os.environ.get(
 ), "POSTGRES_CONNECTION_URL not found in .env file"
 
 
-# ---------------- Constants ----------------
-
-
 DB_URL = os.environ.get("DATABASE_URL")
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
+# ---------------- Cors Helper ----------------
+
 
 def make_cors_response():
-    response = make_response()
     # Set CORS headers for the preflight request
+    response = make_response()
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
     response.headers.add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
     return response
+
+
+# ---------------- Primary Endpoint ----------------
 
 
 @app.route("/prompt", methods=["POST", "OPTIONS"])
@@ -69,7 +73,7 @@ def prompt():
             similar_tables,
         )
 
-        # ---------------- Run 2 Agent Team - Generate SQL & Results ----------------
+        # ---------------- Run Data Team - Generate SQL & Results ----------------
 
         tools = [
             TurboTool("run_sql", llm.run_sql_tool_config, agent_instruments.run_sql),
