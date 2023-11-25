@@ -89,7 +89,12 @@ code {
   border: none;
 }
 
-input,
+input {
+  width: 300px; /* Set the width of the input */
+  padding: 0.5em 1em;
+  text-align: center;
+}
+
 button {
   padding: 0.5em 1em;
   text-align: center;
