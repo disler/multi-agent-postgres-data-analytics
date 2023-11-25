@@ -67,13 +67,15 @@ const sendPrompt = async () => {
 </script>
 
 <style scoped>
-.logo,
+.logo {
+  background-color: #000000; /* Black background */
+}
 input,
 button,
 pre,
 section,
 code {
-  background-color: #1e1e1e; /* Dark background */
+  background-color: #1e1e1e;
   color: #ffffff; /* White text */
   border: none;
 }
