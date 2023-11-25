@@ -6,6 +6,9 @@
     <a href="https://vuejs.org/" target="_blank">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
+    <a href="https://talktoyourdatabase.com" target="_blank">
+      <img src="./assets/ttydb.svg" class="logo ttydb" alt="TTYDB logo" />
+    </a>
     <h2>Talk To Your Database (Prototype)</h2>
     <h3>Framework: Vue-TS</h3>
 
@@ -99,5 +102,10 @@ section {
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
+}
+
+/* New styles for the TTYDB logo */
+.logo.ttydb {
+  height: 6em; /* Adjust the size as needed */
 }
 </style>
