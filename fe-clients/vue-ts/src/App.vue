@@ -93,6 +93,7 @@ input {
   width: 300px; /* Set the width of the input */
   padding: 0.5em 1em;
   text-align: center;
+  margin-bottom: 1em; /* Add space below the input */
 }
 
 button {
