@@ -19,7 +19,7 @@
       @keyup.enter="sendPrompt"
     />
 
-    <section v-for="(result, index) in promptResults" :key="index">
+    <section v-for="(result, index) in sortedPromptResults" :key="index">
       <h3>{{ result.prompt }}</h3>
       <pre>{{ JSON.stringify(result.results, null, 2) }}</pre>
       <code>{{ result.sql }}</code>
@@ -30,11 +30,19 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+import { computed } from "vue";
+
 interface PromptResult {
   prompt: string;
   results: Record<string, any>[];
   sql: string;
+  created: number; // Timestamp for the created date
 }
+
+// Computed property to sort prompt results by created date
+const sortedPromptResults = computed(() => {
+  return [...promptResults.value].sort((a, b) => b.created - a.created);
+});
 
 const prompt = ref("");
 
@@ -54,8 +62,9 @@ const sendPrompt = async () => {
       body: JSON.stringify({ prompt: prompt.value }),
     });
     if (!response.ok) throw new Error("Network response was not ok");
-    const data = await response.json();
+    const data: PromptResult = await response.json();
     data.results = JSON.parse(data.results); // Assuming 'results' is a JSON string that needs to be parsed
+    data.created = Date.now(); // Add the current timestamp
     promptResults.value.push(data);
     localStorage.setItem("promptResults", JSON.stringify(promptResults.value));
     // code: save this to local storage
@@ -94,7 +103,7 @@ pre {
 section {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 1.5em; /* Increased gap for more space between rows */
   padding: 1em;
 }
 
