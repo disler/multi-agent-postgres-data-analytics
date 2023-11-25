@@ -15,6 +15,7 @@
     <input
       type="text"
       v-model="prompt"
+      :disabled="loading" // Disable input when loading
       placeholder="Enter your prompt"
       @keyup.enter="sendPrompt"
     />
@@ -45,6 +46,7 @@ const sortedPromptResults = computed(() => {
 });
 
 const prompt = ref("");
+const loading = ref(false); // Define the loading variable
 
 // code: load this from local storage or default to empty list
 const promptResults = ref<PromptResult[]>(
@@ -52,6 +54,7 @@ const promptResults = ref<PromptResult[]>(
 );
 
 const sendPrompt = async () => {
+  loading.value = true; // Start loading
   if (prompt.value.trim() === "") return;
   try {
     const response = await fetch("http://localhost:3000/prompt", {
