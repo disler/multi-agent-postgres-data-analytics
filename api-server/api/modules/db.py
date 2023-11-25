@@ -162,3 +162,6 @@ class PostgresManager:
         related_tables_list = list(set(related_tables_list))
 
         return related_tables_list
+
+    def roll_back(self):
+        self.conn.rollback()

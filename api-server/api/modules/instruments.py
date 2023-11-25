@@ -1,3 +1,4 @@
+import json
 from modules.db import PostgresManager
 from modules import file
 import os
@@ -112,12 +113,20 @@ class PostgresAgentInstruments(AgentInstruments):
     def sql_query_file(self):
         return self.get_file_path("sql_query.sql")
 
+    @property
+    def self_correcting_table_def_file(self):
+        return self.get_file_path("table_definitions.sql")
+
     # -------------------------- Agent Functions -------------------------- #
 
     def run_sql(self, sql: str) -> str:
         """
         Run a SQL query against the postgres database
         """
+
+        with open(self.sql_query_file, "w") as f:
+            f.write(sql)
+
         results_as_json = self.db.run_sql(sql)
 
         fname = self.run_sql_results_file
@@ -125,9 +134,6 @@ class PostgresAgentInstruments(AgentInstruments):
         # dump these results to a file
         with open(fname, "w") as f:
             f.write(results_as_json)
-
-        with open(self.sql_query_file, "w") as f:
-            f.write(sql)
 
         return "Successfully delivered results to json file"
 
@@ -171,3 +177,10 @@ class PostgresAgentInstruments(AgentInstruments):
                     return False, f"File {fname} is empty"
 
         return True, ""
+
+    def validate_file_exists(self, file: str):
+        def file_exists():
+            if not os.path.exists(file):
+                raise Exception(f"File {file} does not exist")
+
+        return file_exists
