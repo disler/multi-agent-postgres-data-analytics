@@ -130,4 +130,10 @@ section {
 .logo.ttydb {
   height: 6em; /* Adjust the size as needed */
 }
+
+input:disabled {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  opacity: 0.5;
+}
 </style>
