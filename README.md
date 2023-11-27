@@ -110,7 +110,7 @@ Video: [https://youtu.be/KwcrjP3vuy0](https://youtu.be/KwcrjP3vuy0)
 
 <img src="imgs/7-turbo4-assistants-threads-messages.png" width="300" height="auto">
 
-### [Part 8 - Copilot Prompt Engineering: 3 UI Frameworks, 2 AI Agents, 1 Coding Assistant (AIDER CCC)](#)
+### [Part 8 - Copilot Prompt Engineering: 3 UI Frameworks, 2 AI Agents, 1 Coding Assistant (AIDER CCC)](https://youtu.be/7EA19-D4-Zo)
 
 Branch: [v8-ccc-ai-engineering-with-aider](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v8-ccc-ai-engineering-with-aider)
 
@@ -119,7 +119,13 @@ Video: [https://youtu.be/7EA19-D4-Zo](https://youtu.be/7EA19-D4-Zo)
 <img src="imgs/8-ccc-ai-engineering-with-aider.png" width="300" height="auto">
 
 
-### [Part 9 - UNRELEASED](#)
+### [Part 9 - Your AI Agents can SELF-CORRECT: Using Assistants API to AUTO FIX SQL Database Errors](https://youtu.be/Uf7cYAXe3eI)
+
+Branch: [v9-self-correcting-assistant](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v9-self-correcting-assistant)
+
+Video: [https://youtu.be/Uf7cYAXe3eI](https://youtu.be/Uf7cYAXe3eI)
+
+<img src="imgs/9-self-correcting-openai-gpt4-turbo-assistant.png" width="300" height="auto">
 
 ### [Part 10 - UNRELEASED](#)
 
