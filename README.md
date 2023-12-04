@@ -127,7 +127,13 @@ Video: [https://youtu.be/Uf7cYAXe3eI](https://youtu.be/Uf7cYAXe3eI)
 
 <img src="imgs/9-self-correcting-openai-gpt4-turbo-assistant.png" width="300" height="auto">
 
-### [Part 10 - UNRELEASED](#)
+### [Part 10 - UNRELEASED](https://youtu.be/5wROK4lBoeo)
+
+Branch: [v10-talk-to-your-database-beta-launch](https://github.com/disler/multi-agent-postgres-data-analytics/tree/v10-talk-to-your-database-beta-launch)
+
+Video: [https://youtu.be/5wROK4lBoeo](https://youtu.be/5wROK4lBoeo)
+
+<img src="imgs/10-talk-to-your-database.png" width="300" height="auto">
 
 ---
 
