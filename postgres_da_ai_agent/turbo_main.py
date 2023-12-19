@@ -1,5 +1,5 @@
 from postgres_da_ai_agent.agents.turbo4 import Turbo4
-from postgres_da_ai_agent.types import Chat, TurboTool
+from postgres_da_ai_agent.data_types import Chat, TurboTool
 from typing import List, Callable
 import os
 from postgres_da_ai_agent.agents.instruments import PostgresAgentInstruments

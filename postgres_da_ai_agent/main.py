@@ -15,7 +15,7 @@ import dotenv
 import argparse
 import autogen
 
-from postgres_da_ai_agent.types import ConversationResult
+from postgres_da_ai_agent.data_types import ConversationResult
 
 
 # ---------------- Your Environment Variables ----------------

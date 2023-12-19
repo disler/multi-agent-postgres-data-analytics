@@ -10,7 +10,7 @@ from openai.types import FileObject
 from openai.types.beta.threads.thread_message import ThreadMessage
 from openai.types.beta.threads.run_submit_tool_outputs_params import ToolOutput
 from postgres_da_ai_agent.modules import llm
-from postgres_da_ai_agent.types import Chat, TurboTool
+from postgres_da_ai_agent.data_types import Chat, TurboTool
 
 dotenv.load_dotenv()
 
