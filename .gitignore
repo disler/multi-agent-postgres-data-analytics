@@ -50,3 +50,4 @@ pip-wheel-metadata
 /poetry.toml
 
 poetry/core/*
+.aider*
