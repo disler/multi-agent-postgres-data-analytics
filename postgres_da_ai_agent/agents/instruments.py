@@ -175,3 +175,19 @@ class PostgresAgentInstruments(AgentInstruments):
                     return False, f"File {fname} is empty"
 
         return True, ""
+
+class PrestoAgentInstruments(AgentInstruments):
+    """
+    Unified Toolset for the PrestoDB Data Analytics Multi-Agent System
+
+    Advantages:
+
+    Guidelines:
+
+    """
+
+
+    # -------------------------- Agent Properties -------------------------- #
+
+
+    # -------------------------- Agent Functions -------------------------- #

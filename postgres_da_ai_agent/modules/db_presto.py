@@ -12,7 +12,7 @@ class PrestoManager:
 
     def run_sql(self, sql) -> str:
         """
-        Run a SQL query against the postgres database
+        Run a SQL query against the Presto database
         """
 
 
