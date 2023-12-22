@@ -31,6 +31,8 @@ run_sql_config = {
     ],
 }
 
+# TODO: Will a run_presto_sql_config be needed?
+
 # Configuration with "write_file"
 write_file_config = {
     **base_config,  # Inherit base configuration
