@@ -28,7 +28,7 @@ assert os.environ.get(
 ), "POSTGRES_CONNECTION_URL not found in .env file"
 
 
-# ---------------- Constants ----------------
+# ---------------- Constants ---------------------------------
 
 
 DB_URL = os.environ.get("DATABASE_URL")
@@ -113,7 +113,7 @@ def main():
             table_definitions,
         )
 
-        # ----------- Data Eng Team: Based on a sql table definitions and a prompt create an sql statement and execute it -------------
+        # ----------- Data Eng Team: Based on a SQL table definitions and a prompt create an sql statement and execute it -------------
 
         data_eng_orchestrator = agents.build_team_orchestrator(
             "data_eng",

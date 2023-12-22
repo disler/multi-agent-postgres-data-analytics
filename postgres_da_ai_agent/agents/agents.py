@@ -41,7 +41,7 @@ Format your insights in JSON format.
 ```"""
 
 
-INSIGHTS_FILE_REPORTER_PROMPT = "You're a data reporter. You write json data you receive directly into a file using the write_innovation_file function."
+INSIGHTS_FILE_REPORTER_PROMPT = "You are a data reporter. You write json data you receive directly into a file using the write_innovation_file function."
 
 
 # unused prompts
