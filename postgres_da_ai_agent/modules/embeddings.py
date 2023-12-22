@@ -1,7 +1,7 @@
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import BertTokenizer, BertModel
 
-from postgres_da_ai_agent.modules.db import PostgresManager
+from postgres_da_ai_agent.modules.db_postgres import PostgresManager
 
 
 class DatabaseEmbedder:

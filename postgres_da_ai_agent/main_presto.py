@@ -3,8 +3,8 @@ Heads up: in v7 pyautogen doesn't work with the latest openai version so this fi
 """
 
 import os
-from postgres_da_ai_agent.agents.instruments import PostgresAgentInstruments
-from postgres_da_ai_agent.modules.db import PostgresManager
+from postgres_da_ai_agent.agents.instruments import PrestoAgentInstruments
+from postgres_da_ai_agent.modules.db_postgres import PrestoManager
 from postgres_da_ai_agent.modules import llm
 from postgres_da_ai_agent.modules import orchestrator
 from postgres_da_ai_agent.modules import rand
@@ -58,7 +58,7 @@ def main():
 
 
         # -------- BUILD TABLE DEFINITIONS -----------
-    with PostgresAgentInstruments(DB_URL, session_id) as (agent_instruments, db):
+    with PrestoAgentInstruments(DB_URL, session_id) as (agent_instruments, db):
         # ----------- Gate Team: Prevent bad prompts from running and burning your $$$ -------------
 
         gate_orchestrator = agents.build_team_orchestrator(

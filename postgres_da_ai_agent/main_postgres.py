@@ -4,7 +4,7 @@ Heads up: in v7 pyautogen doesn't work with the latest openai version so this fi
 
 import os
 from postgres_da_ai_agent.agents.instruments import PostgresAgentInstruments
-from postgres_da_ai_agent.modules.db import PostgresManager
+from postgres_da_ai_agent.modules.db_postgres import PostgresManager
 from postgres_da_ai_agent.modules import llm
 from postgres_da_ai_agent.modules import orchestrator
 from postgres_da_ai_agent.modules import rand
