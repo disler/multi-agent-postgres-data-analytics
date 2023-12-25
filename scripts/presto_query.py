@@ -1,5 +1,5 @@
 import prestodb
-conn = prestodb.dbapi.connect(
+connection = prestodb.dbapi.connect(
     host='prestodb.develop.bhuma.dev',
     port=443,
     user='root',
@@ -8,7 +8,7 @@ conn = prestodb.dbapi.connect(
     http_scheme='https',
     auth=prestodb.auth.BasicAuthentication("root", ""),
 )
-cur = conn.cursor()
-cur.execute('SELECT cc_call_center_id, cc_name FROM tpcds.sf10.call_center')
-rows = cur.fetchall()
+cursor = connection.cursor()
+cursor.execute('SELECT cc_call_center_id, cc_name FROM tpcds.sf10.call_center')
+rows = cursor.fetchall()
 print(rows)

@@ -40,6 +40,7 @@ class AgentInstruments:
     def root_dir(self):
         return os.path.join(BASE_DIR, self.session_id)
 
+# TODO: How is AgentInstruments used in both classes?
 class PostgresAgentInstruments(AgentInstruments):
     """
     Unified Toolset for the Postgres Data Analytics Multi-Agent System
@@ -187,7 +188,11 @@ class PrestoAgentInstruments(AgentInstruments):
     across various data sources, efficiently handling large-scale data analytics tasks.
     """
 
+    # COMPLETED
     def __init__(self, presto_db_url: dict, session_id: str) -> None:
+        """
+        Setting up all the requirements to have a successful connection with PrestoDB instance using presto-python-client.
+        """
         super().__init__()
 
         self.presto_db_url = presto_db_url
@@ -201,6 +206,9 @@ class PrestoAgentInstruments(AgentInstruments):
         TODO: Validate connection is successful.
         """
         self.reset_files()
+        # **self.presto_db_url is a bit of Python syntax known as argument unpacking. self.presto_db_url is expected
+        # to be a dictionary containing connection parameters (like host, port, user, etc.). The ** syntax unpacks
+        # this dictionary, passing its key-value pairs as arguments to the connect function.
         self.connection = prestodb.dapi.connect(**self.presto_db_url)         # What is this?
         self.cursor = self.connection.cursor()                  # What is this?
         return self
@@ -213,12 +221,11 @@ class PrestoAgentInstruments(AgentInstruments):
     def sync_messages(self, messages: list):
         """
         Syncs messages with the orchestrator
-        TODO: Write sync_messages function. Figure out the logic with orchestrator.
         """
+        self.messages = messages
 
     def reset_files(self):
         """
-        TODO: What does the root_dir mean? Where is it?
         Clear everything in the root_dir
         """
         if not os.path.exists(self.root_dir):
@@ -241,14 +248,14 @@ class PrestoAgentInstruments(AgentInstruments):
     @property
     def run_sql_results_file(self):
         """
-        TODO: This function is unmodified from the PostgresAgentInstrument class. Validate if it's useful.
+        A convenient way to access the file path for storing the results of SQL queries executed against the PrestoDB
         """
         return self.get_file_path("run_sql_results.json")
 
     @property
     def sql_query_file(self):
         """
-        TODO: This function is unmodified from the PostgresAgentInstrument class. Validate if it's useful.
+        Provides the path to a file where the SQL query is stored.
         """
         return self.get_file_path("sql_query.sql")
 
@@ -306,5 +313,3 @@ class PrestoAgentInstruments(AgentInstruments):
             if not os.path.exists(fname) or os.path.getsize(fname) == 0:
                 return False, f"File {fname} is empty"
         return True, ""
-
-    # Other utility methods as needed
