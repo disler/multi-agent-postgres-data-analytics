@@ -53,15 +53,12 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
+        <a href="https://bhuma.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
       </div>
-      <h1>Framework: React-TS</h1>
-      <h2>TTYDB Prototype</h2>
+      <h1>Bhuma AI</h1>
+      <h2>Chat assistant for viz generation</h2>
       {/* Dark theme input and button */}
       <input
         type="text"

@@ -40,10 +40,22 @@
 .read-the-docs {
   color: #888;
 }
+
 /* Dark theme styles */
-input, button, pre, section, code {
+input, pre, section, code {
   background-color: #333;
   color: white;
+  border: none; /* Remove border for consistent height */
+  padding: 10px; /* Adjust padding as needed */
+  line-height: 1.5; /* Set a common line-height */
+}
+
+/* Dark theme styles */
+button {
+  background-color: #333;
+  border: 2px; /* Remove border for consistent height */
+  padding: 10px; /* Adjust padding as needed */
+  line-height: 1.5; /* Set a common line-height */
 }
 
 /* Scrollable pre tag */

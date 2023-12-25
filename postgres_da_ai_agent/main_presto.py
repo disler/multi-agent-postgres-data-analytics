@@ -56,7 +56,7 @@ def main():
 
     # ---------------- Create Agent Instruments And Build Database Connection ----------------
 
-    with PrestoAgentInstruments(DB_URL, session_id) as (agent_instruments, db):
+    with PrestoAgentInstruments(PRESTO_DB_URL, session_id) as (agent_instruments, db):
         # ----------- Gate Team: Prevent bad prompts from running and burning your $$$ -------------
 
         gate_orchestrator = agents.build_team_orchestrator(
