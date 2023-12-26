@@ -1,5 +1,6 @@
 from typing import Optional, List, Dict, Any
 from postgres_da_ai_agent.agents.instruments import PostgresAgentInstruments
+from postgres_da_ai_agent.agents.instruments import AgentInstruments
 from postgres_da_ai_agent.modules import orchestrator
 from postgres_da_ai_agent.agents import agent_config
 import autogen
@@ -50,17 +51,17 @@ TEXT_REPORT_ANALYST_PROMPT = "Text File Report Analyst. You exclusively use the 
 JSON_REPORT_ANALYST_PROMPT = "Json Report Analyst. You exclusively use the write_json_file function on the report."
 YML_REPORT_ANALYST_PROMPT = "Yaml Report Analyst. You exclusively use the write_yml_file function on the report."
 
-
 # ------------------------ BUILD AGENT TEAMS ------------------------
 
 
-def build_data_eng_team(instruments: PostgresAgentInstruments):
+def build_data_eng_team(instruments: AgentInstruments):
     """
     Build a team of agents that can generate, execute, and report an SQL query
     """
 
-    # create a set of agents with specific roles
-    # admin user proxy agent - takes in the prompt and manages the group chat
+    # Create a set of agents with specific roles
+
+    # Admin user proxy agent - takes in the prompt and manages the group chat
     user_proxy = autogen.UserProxyAgent(
         name="Admin",
         system_message=USER_PROXY_PROMPT,
@@ -68,7 +69,7 @@ def build_data_eng_team(instruments: PostgresAgentInstruments):
         human_input_mode="NEVER",
     )
 
-    # data engineer agent - generates the sql query
+    # Data engineer agent - generates the sql query
     data_engineer = autogen.AssistantAgent(
         name="Engineer",
         llm_config=agent_config.base_config,
@@ -84,7 +85,8 @@ def build_data_eng_team(instruments: PostgresAgentInstruments):
         code_execution_config=False,
         human_input_mode="NEVER",
         function_map={
-            "run_sql": instruments.run_sql,
+            # TODO: Set this up so it works with either PrestoDB or PostgreSQL
+            "run_sql": instruments.,
         },
     )
 
@@ -162,7 +164,7 @@ def build_scrum_master_team():
     return [user_proxy, scrum_agent]
 
 
-def build_insights_team(instruments: PostgresAgentInstruments):
+def build_insights_team(instruments: AgentInstruments):
     user_proxy = autogen.UserProxyAgent(
         name="Admin",
         system_message=USER_PROXY_PROMPT,
@@ -183,6 +185,7 @@ def build_insights_team(instruments: PostgresAgentInstruments):
         system_message=INSIGHTS_FILE_REPORTER_PROMPT,
         human_input_mode="NEVER",
         function_map={
+            # TODO: Modify this so it can work with both. How do we set this up so in main_presto we pass this down as a prop and it know exactly what run_sql method to run and doesn't get confused with either of them.
             "write_innovation_file": instruments.write_innovation_file,
         },
     )
@@ -195,12 +198,16 @@ def build_insights_team(instruments: PostgresAgentInstruments):
 
 def build_team_orchestrator(
     team: str,
-    agent_instruments: PostgresAgentInstruments,
+    agent_instruments: AgentInstruments,
     validate_results: callable = None,
 ) -> orchestrator.Orchestrator:
     """
-    Based on a team name, build a team of agents and return an orchestrator
+    Based on a team name, build a team of agents and return an orchestrator.
+
+    The function now accepts an instance of AgentInstruments, which can be either
+    PostgresAgentInstruments or PrestoAgentInstruments.
     """
+
     if team == "data_eng":
         return orchestrator.Orchestrator(
             name="data_eng_team",
