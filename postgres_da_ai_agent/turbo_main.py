@@ -5,7 +5,7 @@ import os
 from postgres_da_ai_agent.agents.instruments import PostgresAgentInstruments
 from postgres_da_ai_agent.modules import llm
 from postgres_da_ai_agent.modules import rand
-from postgres_da_ai_agent.modules import embeddings
+from postgres_da_ai_agent.modules import embeddings_postgres
 import argparse
 
 DB_URL = os.environ.get("DATABASE_URL")
