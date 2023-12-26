@@ -6,13 +6,9 @@ import autogen
 import guidance
 
 # ------------------------ PROMPTS ------------------------
-
-
-USER_PROXY_PROMPT = "A human admin. Interact with the Product Manager to discuss the plan. Plan execution needs to be approved by this admin."
-DATA_ENGINEER_PROMPT = "A Data Engineer. Generate the initial SQL based on the requirements provided. Send it to the Sr Data Analyst to be executed. "
-SR_DATA_ANALYST_PROMPT = "Sr Data Analyst. You run the SQL query using the run_sql function, send the raw response to the data viz team. You use the run_sql function exclusively."
-
-
+USER_PROXY_PROMPT = ("A human admin. Interact with the Product Manager to discuss the plan. Plan execution needs to be approved by this admin.")
+DATA_ENGINEER_PROMPT = ("A Data Engineer. Generate the initial SQL based on the requirements provided. Send it to the Sr Data Analyst to be executed.")
+SR_DATA_ANALYST_PROMPT = ("Sr Data Analyst. You run the SQL query using the run_sql function, send the raw response to the data viz team. You use the run_sql function exclusively.")
 GUIDANCE_SCRUM_MASTER_SQL_NLQ_PROMPT = """
 Is the following block of text a SQL Natural Language Query (NLQ)? Please rank from 1 to 5, where:
 1: Definitely not NLQ
