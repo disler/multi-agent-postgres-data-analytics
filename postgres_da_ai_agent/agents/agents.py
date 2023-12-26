@@ -144,7 +144,7 @@ def build_data_viz_team(instruments: PostgresAgentInstruments):
     ]
 
 
-def build_scrum_master_team(instruments: PostgresAgentInstruments):
+def build_scrum_master_team():
     user_proxy = autogen.UserProxyAgent(
         name="Admin",
         system_message=USER_PROXY_PROMPT,
