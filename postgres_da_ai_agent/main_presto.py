@@ -11,7 +11,7 @@ from postgres_da_ai_agent.modules import llm
 from postgres_da_ai_agent.modules import orchestrator
 from postgres_da_ai_agent.modules import rand
 from postgres_da_ai_agent.modules import file
-from postgres_da_ai_agent.modules import embeddings
+from postgres_da_ai_agent.modules import embeddings_presto
 import prestodb
 import dotenv
 import argparse
@@ -109,7 +109,7 @@ def main():
         # TODO: Set up table definitions so they work with PrestoDB db_presto.py file methods
         map_table_name_to_table_def = db.get_table_definition_map_for_embeddings()
 
-        database_embedder = embeddings.DatabaseEmbedder()
+        database_embedder = embeddings_presto.DatabaseEmbedder()
 
         for name, table_def in map_table_name_to_table_def.items():
             database_embedder.add_table(name, table_def)
@@ -130,14 +130,14 @@ def main():
 
         prompt = llm.add_cap_ref(
             prompt,
-            f"Use these {POSTGRES_TABLE_DEFINITIONS_CAP_REF} to satisfy the database query.",
-            POSTGRES_TABLE_DEFINITIONS_CAP_REF,
+            f"Use these {PRESTO_TABLE_DEFINITIONS_CAP_REF} to satisfy the database query.",
+            PRESTO_TABLE_DEFINITIONS_CAP_REF,
             table_definitions,
         )
 
         # ----------- Data Eng Team: Based on a SQL table definitions and a prompt create an sql statement and execute it -------------
 
-        data_eng_orchestrator = agents.build_team_orchestrator(
+        data_eng_orchestrator = agents_presto.build_team_orchestrator(
             "data_eng",
             agent_instruments,
             validate_results=agent_instruments.validate_run_sql,
@@ -168,12 +168,12 @@ def main():
 
         insights_prompt = llm.add_cap_ref(
             innovation_prompt,
-            f"Use these {POSTGRES_TABLE_DEFINITIONS_CAP_REF} to satisfy the database query.",
-            POSTGRES_TABLE_DEFINITIONS_CAP_REF,
+            f"Use these {PRESTO_TABLE_DEFINITIONS_CAP_REF} to satisfy the database query.",
+            PRESTO_TABLE_DEFINITIONS_CAP_REF,
             core_and_related_table_definitions,
         )
 
-        data_insights_orchestrator = agents.build_team_orchestrator(
+        data_insights_orchestrator = agents_presto.build_team_orchestrator(
             "data_insights",
             agent_instruments,
             validate_results=agent_instruments.validate_innovation_files,
