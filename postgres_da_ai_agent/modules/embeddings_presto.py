@@ -20,7 +20,7 @@ class DatabaseEmbedder:
         self.db = db
 
     def get_similar_table_defs_for_prompt(self, prompt: str, n_similar=5, n_foreign=0):
-        map_table_name_to_table_def = self.db.get_table_definition_map_for_embeddings()
+        map_table_name_to_table_def = self.db_presto.get_table_definition_map_for_embeddings()
         for name, table_def in map_table_name_to_table_def.items():
             self.add_table(name, table_def)
 
