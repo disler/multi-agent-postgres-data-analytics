@@ -1,6 +1,5 @@
 from typing import Optional, List, Dict, Any
 from postgres_da_ai_agent.agents.instruments import PostgresAgentInstruments
-from postgres_da_ai_agent.agents.instruments import AgentInstruments
 from postgres_da_ai_agent.modules import orchestrator
 from postgres_da_ai_agent.agents import agent_config
 import autogen
@@ -54,7 +53,7 @@ YML_REPORT_ANALYST_PROMPT = "Yaml Report Analyst. You exclusively use the write_
 # ------------------------ BUILD AGENT TEAMS ------------------------
 
 
-def build_data_eng_team(instruments: AgentInstruments):
+def build_data_eng_team(instruments: PostgresAgentInstruments):
     """
     Build a team of agents that can generate, execute, and report an SQL query
     """
@@ -86,7 +85,7 @@ def build_data_eng_team(instruments: AgentInstruments):
         human_input_mode="NEVER",
         function_map={
             # TODO: Set this up so it works with either PrestoDB or PostgreSQL
-            "run_sql": instruments.,
+            "run_sql": instruments.run_sql,
         },
     )
 
@@ -164,7 +163,7 @@ def build_scrum_master_team():
     return [user_proxy, scrum_agent]
 
 
-def build_insights_team(instruments: AgentInstruments):
+def build_insights_team(instruments: PostgresAgentInstruments):
     user_proxy = autogen.UserProxyAgent(
         name="Admin",
         system_message=USER_PROXY_PROMPT,
@@ -198,7 +197,7 @@ def build_insights_team(instruments: AgentInstruments):
 
 def build_team_orchestrator(
     team: str,
-    agent_instruments: AgentInstruments,
+    agent_instruments: PostgresAgentInstruments,
     validate_results: callable = None,
 ) -> orchestrator.Orchestrator:
     """
