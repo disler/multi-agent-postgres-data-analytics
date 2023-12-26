@@ -190,29 +190,23 @@ class PrestoAgentInstruments(AgentInstruments):
     across various data sources, efficiently handling large-scale data analytics tasks.
     """
 
-    def __init__(self, presto_db_url: dict, session_id: str) -> None:
+    def __init__(self, presto_db_config: dict, session_id: str) -> None:
         """
         Setting up all the requirements to have a successful connection with PrestoDB instance using presto-python-client.
         """
         super().__init__()
 
-        self.presto_db_url = presto_db_url
+        self.presto_db_config = presto_db_config
         self.connection = None
         self.cursor = None
         self.session_id = session_id
         self.innovation_index = 0
 
     def __enter__(self):
-        """
-        TODO: Validate connection is successful.
-        """
         self.reset_files()
-        # **self.presto_db_url is a bit of Python syntax known as argument unpacking. self.presto_db_url is expected
-        # to be a dictionary containing connection parameters (like host, port, user, etc.). The ** syntax unpacks
-        # this dictionary, passing its key-value pairs as arguments to the connect function.
-        self.connection = prestodb.dapi.connect(**self.presto_db_url)  # What is this?
-        self.cursor = self.connection.cursor()  # What is this?
-        return self
+        self.db = PrestoManager()
+        self.db.connect_with_url(self.presto_db_config)
+        return self, self.db
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.cursor.close()
