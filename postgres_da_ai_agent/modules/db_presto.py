@@ -17,26 +17,20 @@ class PrestoManager:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
 
-    def connect_with_url(self, url):
-        # Extract connection parameters from the URL
-        # Assuming the URL format: https://user:password@host:port/catalog/schema
-        _, rest = url.split("://")
-        user_password, host_port_catalog_schema = rest.split("@")
-        user, password = user_password.split(":")
-        host_port, catalog_schema = host_port_catalog_schema.split("/")
-        host, port = host_port.split(":")
-        catalog, schema = catalog_schema.split("/")
+    def connect_with_url(self, config):
+        # If auth key is None, do not include it in the connection parameters
+        conn_params = {
+            'host': config['host'],
+            'port': config['port'],
+            'user': config['user'],
+            'catalog': config['catalog'],
+            'schema': config['schema'],
+            'http_scheme': config['http_scheme'],
+        }
+        if config.get('auth'):
+            conn_params['auth'] = config['auth']
 
-        # Establishing the connection
-        self.conn = prestodb.dbapi.connect(
-            host=host,
-            port=int(port),
-            user=user,
-            catalog=catalog,
-            schema=schema,
-            http_scheme='https',
-            auth=prestodb.auth.BasicAuthentication(user, password)
-        )
+        self.conn = prestodb.dbapi.connect(**conn_params)
         self.cur = self.conn.cursor()
 
     def close(self):
