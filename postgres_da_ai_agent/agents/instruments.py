@@ -7,6 +7,7 @@ import json
 
 BASE_DIR = os.environ.get("BASE_DIR", "./agent_results")
 
+
 # TODO: Set both classes correctly so the methods they share are not replicated and can work correctly.
 class AgentInstruments:
     """
@@ -39,6 +40,7 @@ class AgentInstruments:
     @property
     def root_dir(self):
         return os.path.join(BASE_DIR, self.session_id)
+
 
 class PostgresAgentInstruments(AgentInstruments):
     """
