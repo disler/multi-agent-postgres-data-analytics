@@ -2,7 +2,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 from transformers import BertTokenizer, BertModel
 
 from postgres_da_ai_agent.modules.db_postgres import PostgresManager
-from postgres_da_ai_agent.modules.db_presto import PrestoManager
 
 # TODO: Set up class so it works with PrestoManager, at the moment is only importing PostgresManager. Also,
 #  make it aware of the parents component so we choose by default the right manager depending on the databaase we are
