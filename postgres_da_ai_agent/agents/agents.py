@@ -217,7 +217,7 @@ def build_team_orchestrator(
     elif team == "scrum_master":
         return orchestrator.Orchestrator(
             name="scrum_master_team",
-            agents=build_scrum_master_team(agent_instruments),
+            agents=build_scrum_master_team(),
             instruments=agent_instruments,
             validate_results_func=validate_results,
         )
