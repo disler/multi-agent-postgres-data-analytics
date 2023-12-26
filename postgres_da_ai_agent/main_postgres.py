@@ -59,7 +59,7 @@ def main():
     with PostgresAgentInstruments(DB_URL, session_id) as (agent_instruments, db):
         # ----------- Gate Team: Prevent bad prompts from running and burning your $$$ -------------
 
-        gate_orchestrator = agents.build_team_orchestrator(
+        gate_orchestrator = agents_postgres.build_team_orchestrator(
             "scrum_master",
             agent_instruments,
             validate_results=lambda: (True, ""),

@@ -3,6 +3,8 @@ Heads up: in v7 pyautogen doesn't work with the latest openai version so this fi
 """
 
 import os
+
+from postgres_da_ai_agent.agents import agents_presto
 from postgres_da_ai_agent.agents.instruments import PrestoAgentInstruments
 from postgres_da_ai_agent.modules.db_presto import PrestoManager
 from postgres_da_ai_agent.modules import llm
@@ -17,7 +19,6 @@ import autogen
 
 from postgres_da_ai_agent.data_types import ConversationResult
 
-
 # ---------------- Your Environment Variables ----------------
 
 dotenv.load_dotenv()
@@ -26,7 +27,6 @@ assert os.environ.get("PRESTO_DATABASE_URL"), "PRESTO_CONNECTION_URL not found i
 assert os.environ.get(
     "OPENAI_API_KEY"
 ), "OPENAI_CONNECTION_URL not found in .env file"
-
 
 # ---------------- Constants ---------------------------------
 
@@ -81,7 +81,7 @@ def main():
 
         # ----------- Gate Team: Prevent bad prompts from running and burning your $$$ -------------
 
-        gate_orchestrator = agents.build_team_orchestrator(
+        gate_orchestrator = agents_presto.build_team_orchestrator(
             "scrum_master",
             agent_instruments,
             validate_results=lambda: (True, ""),
@@ -106,7 +106,7 @@ def main():
                 return
 
         # -------- BUILD TABLE DEFINITIONS -----------
-# TODO: Set up table definitions so they work with PrestoDB db_presto.py file methods
+        # TODO: Set up table definitions so they work with PrestoDB db_presto.py file methods
         map_table_name_to_table_def = db.get_table_definition_map_for_embeddings()
 
         database_embedder = embeddings.DatabaseEmbedder()
