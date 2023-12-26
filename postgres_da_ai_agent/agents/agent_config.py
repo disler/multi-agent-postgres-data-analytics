@@ -1,7 +1,7 @@
 import autogen
 
 
-# build the gpt_configuration object
+# Build the GPT_Configuration object
 # Base Configuration
 base_config = {
     "use_cache": False,
@@ -30,8 +30,6 @@ run_sql_config = {
         }
     ],
 }
-
-# TODO: Will a run_presto_sql_config be needed?
 
 # Configuration with "write_file"
 write_file_config = {
