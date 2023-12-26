@@ -9,7 +9,7 @@ from postgres_da_ai_agent.modules import llm
 from postgres_da_ai_agent.modules import orchestrator
 from postgres_da_ai_agent.modules import rand
 from postgres_da_ai_agent.modules import file
-from postgres_da_ai_agent.modules import embeddings
+from postgres_da_ai_agent.modules import embeddings_postgres
 from postgres_da_ai_agent.agents import agents_postgres
 import dotenv
 import argparse
@@ -87,7 +87,7 @@ def main():
 
         map_table_name_to_table_def = db.get_table_definition_map_for_embeddings()
 
-        database_embedder = embeddings.DatabaseEmbedder()
+        database_embedder = embeddings_postgres.DatabaseEmbedder()
 
         for name, table_def in map_table_name_to_table_def.items():
             database_embedder.add_table(name, table_def)
@@ -115,7 +115,7 @@ def main():
 
         # ----------- Data Eng Team: Based on a SQL table definitions and a prompt create an sql statement and execute it -------------
 
-        data_eng_orchestrator = agents.build_team_orchestrator(
+        data_eng_orchestrator = agents_postgres.build_team_orchestrator(
             "data_eng",
             agent_instruments,
             validate_results=agent_instruments.validate_run_sql,
@@ -151,7 +151,7 @@ def main():
             core_and_related_table_definitions,
         )
 
-        data_insights_orchestrator = agents.build_team_orchestrator(
+        data_insights_orchestrator = agents_postgres.build_team_orchestrator(
             "data_insights",
             agent_instruments,
             validate_results=agent_instruments.validate_innovation_files,
