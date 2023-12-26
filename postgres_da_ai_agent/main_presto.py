@@ -11,6 +11,7 @@ from postgres_da_ai_agent.modules import rand
 from postgres_da_ai_agent.modules import file
 from postgres_da_ai_agent.modules import embeddings
 from postgres_da_ai_agent.agents import agents
+import prestodb
 import dotenv
 import argparse
 import autogen
@@ -30,8 +31,28 @@ assert os.environ.get(
 
 # ---------------- Constants ---------------------------------
 
+# TODO: Define dictionary for the PrestoDB connection from main_presto.py to instruments.py.
+"""PRESTO_DB_URL = {
+    host='prestodb.develop.bhuma.dev',
+    port=443,
+    user='root',
+    catalog='tpcds',
+    schema='sf10',
+    http_scheme='https',
+    auth=prestodb.auth.BasicAuthentication("root", ""),
+}
 
-PRESTO_DB_URL = os.environ.get("PRESTO_DATABASE_URL")
+presto_db_url = {
+    'host': os.getenv('PRESTO_HOST'),
+    'port': int(os.getenv('PRESTO_PORT')),  # Port should be an integer
+    'user': os.getenv('PRESTO_USER'),
+    'catalog': os.getenv('PRESTO_CATALOG'),
+    'schema': os.getenv('PRESTO_SCHEMA')
+    'http_scheme': os.getenv('PRESTO_HTTP_SCHEME'),
+    'auth': prestodb.auth.BasicAuthentication(os.getenv('PRESTO_PASSWORD'),)
+}
+"""
+
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
 PRESTO_TABLE_DEFINITIONS_CAP_REF = "TABLE_DEFINITIONS"
@@ -57,6 +78,8 @@ def main():
     # ---------------- Create Agent Instruments And Build Database Connection ----------------
 
     with PrestoAgentInstruments(PRESTO_DB_URL, session_id) as (agent_instruments, db):
+        # TODO: Fix PRESTO_DB_URL set up as dictionary
+
         # ----------- Gate Team: Prevent bad prompts from running and burning your $$$ -------------
 
         gate_orchestrator = agents.build_team_orchestrator(
@@ -84,7 +107,7 @@ def main():
                 return
 
         # -------- BUILD TABLE DEFINITIONS -----------
-
+# TODO: Set up table definitions so they work with PrestoDB db_presto.py file methods
         map_table_name_to_table_def = db.get_table_definition_map_for_embeddings()
 
         database_embedder = embeddings.DatabaseEmbedder()
