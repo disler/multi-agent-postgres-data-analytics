@@ -10,7 +10,6 @@ from postgres_da_ai_agent.modules import orchestrator
 from postgres_da_ai_agent.modules import rand
 from postgres_da_ai_agent.modules import file
 from postgres_da_ai_agent.modules import embeddings
-from postgres_da_ai_agent.agents import agents
 import prestodb
 import dotenv
 import argparse
