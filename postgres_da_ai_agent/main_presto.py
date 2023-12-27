@@ -1,7 +1,7 @@
 """
 Heads up: in v7 pyautogen doesn't work with the latest openai version so this file has been commented out via pyproject.toml
 """
-
+import json
 import os
 
 from postgres_da_ai_agent.agents import agents_presto
@@ -23,34 +23,27 @@ from postgres_da_ai_agent.data_types import ConversationResult
 
 dotenv.load_dotenv()
 
-assert os.environ.get("PRESTO_DATABASE_URL"), "PRESTO_CONNECTION_URL not found in .env file"
-assert os.environ.get(
-    "OPENAI_API_KEY"
-), "OPENAI_CONNECTION_URL not found in .env file"
+required_env_vars = ["PRESTO_HOST", "OPENAI_API_KEY", "PRESTO_PORT", "PRESTO_USER", "PRESTO_CATALOG", "PRESTO_SCHEMA", "PRESTO_HTTP_SCHEME"]
+
+for var in required_env_vars:
+    if not os.environ.get(var):
+        raise EnvironmentError(f"{var} not found in .env file")
 
 # ---------------- Constants ---------------------------------
 
-# TODO: Define dictionary for the PrestoDB connection from main_presto.py to instruments.py.
-"""PRESTO_DB_URL = {
-    host='prestodb.develop.bhuma.dev',
-    port=443,
-    user='root',
-    catalog='tpcds',
-    schema='sf10',
-    http_scheme='https',
-    auth=prestodb.auth.BasicAuthentication("root", ""),
-}
+# Check if PRESTO_PASSWORD is present in the environment, use None if not provided
+presto_password = os.getenv('PRESTO_PASSWORD', None)
+auth = prestodb.auth.BasicAuthentication(os.getenv('PRESTO_USER'), presto_password) if presto_password else None
 
-presto_db_url = {
+PRESTO_DB_CONFIG = {
     'host': os.getenv('PRESTO_HOST'),
-    'port': int(os.getenv('PRESTO_PORT')),  # Port should be an integer
+    'port': int(os.getenv('PRESTO_PORT')),
     'user': os.getenv('PRESTO_USER'),
     'catalog': os.getenv('PRESTO_CATALOG'),
-    'schema': os.getenv('PRESTO_SCHEMA')
+    'schema': os.getenv('PRESTO_SCHEMA'),
     'http_scheme': os.getenv('PRESTO_HTTP_SCHEME'),
-    'auth': prestodb.auth.BasicAuthentication(os.getenv('PRESTO_PASSWORD'),)
+    'auth': auth
 }
-"""
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
