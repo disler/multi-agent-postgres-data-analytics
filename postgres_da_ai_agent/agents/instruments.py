@@ -206,11 +206,13 @@ class PrestoAgentInstruments(AgentInstruments):
         self.reset_files()
         self.db = PrestoManager()
         self.db.connect_with_url(self.presto_db_config)
-        return self, self.db
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.cursor.close()
-        self.connection.close()
+        if self.db.cur:
+            self.db.cur.close()
+        if self.db.conn:
+            self.db.conn.close()
 
     def sync_messages(self, messages: list):
         """
@@ -254,18 +256,7 @@ class PrestoAgentInstruments(AgentInstruments):
         """
         Run a SQL query against the PrestoDB
         """
-        self.cursor.execute(sql)
-        results = self.cursor.fetchall()  # This is correct from /scripts
-        results_as_json = json.dumps(results)
-
-        # Dump these results to a file
-        with open(self.run_sql_results_file, "w") as f:
-            f.write(results_as_json)
-
-        with open(self.sql_query_file, "w") as f:
-            f.write(sql)
-
-        return "Successfully delivered results to JSON file"
+        return self.db.run_sql(sql)
 
     def validate_run_sql(self):
         """
