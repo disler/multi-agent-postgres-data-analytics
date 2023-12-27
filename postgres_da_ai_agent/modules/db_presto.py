@@ -2,6 +2,7 @@ import json
 import prestodb
 from datetime import datetime
 
+
 class PrestoManager:
     """
     A class to manage PrestoDB connections and queries
@@ -98,3 +99,44 @@ class PrestoManager:
             definitions.append(self.get_table_definition(table_name))
         return "\n\n".join(definitions)
 
+    def get_table_definitions_map_for_embeddings(self):
+        """
+        Creates a map of table names to table definitions
+        """
+        table_names = self.get_all_table_names()
+        definitions = {}
+        for table_name in table_names:
+            definitions[table_name] = self.get_table_definition(table_name)
+        return definitions
+
+    def get_related_tables(self, table_list, n=2):
+        """
+        Get tables that are related to the given tables in PrestoDB.
+        Note: This function assumes a custom mechanism to track relationships,
+        as PrestoDB does not support foreign keys natively.
+        """
+
+        related_tables_dict = {}
+
+        for table in table_list:
+            # Example query to fetch related tables based on a custom mechanism
+            # Adjust the query based on your specific setup.
+            self.cur.execute(
+                """
+                SELECT related_table
+                FROM custom_relationships_table
+                WHERE table_name = %s
+                LIMIT %s;
+                """,
+                (table, n),
+            )
+
+            related_tables = [row[0] for row in self.cur.fetchall()]
+            related_tables_dict[table] = related_tables
+
+        # Convert dict to list and remove duplicates
+        related_tables_list = []
+        for related_tables in related_tables_dict.values():
+            related_tables_list.extend(related_tables)
+
+        return list(set(related_tables_list))
