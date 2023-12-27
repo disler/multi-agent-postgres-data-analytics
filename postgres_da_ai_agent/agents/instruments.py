@@ -258,6 +258,17 @@ class PrestoAgentInstruments(AgentInstruments):
         """
         return self.db.run_sql(sql)
 
+        # Dump these results to a file
+        """        
+            with open(self.run_sql_results_file, "w") as f:
+            f.write(results_as_json)
+
+        with open(self.sql_query_file, "w") as f:
+            f.write(sql)
+
+        return "Successfully delivered results to JSON file
+        """"
+
     def validate_run_sql(self):
         """
         Validate that the run_sql results file exists and has content.
