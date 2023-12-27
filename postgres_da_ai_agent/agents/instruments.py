@@ -206,7 +206,7 @@ class PrestoAgentInstruments(AgentInstruments):
         self.reset_files()
         self.db = PrestoManager()
         self.db.connect_with_url(self.presto_db_config)
-        return self
+        return self, self.db
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.db.cur:
