@@ -51,147 +51,26 @@ PRESTO_TABLE_DEFINITIONS_CAP_REF = "TABLE_DEFINITIONS"
 
 
 def main():
-    # ---------------- Parse '--prompt' CLI Parameter ----------------
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--prompt", help="The prompt for the AI")
-    args = parser.parse_args()
+    session_id = rand.generate_session_id("presto_session")  # Example session ID, modify as needed
 
-    if not args.prompt:
-        print("Please provide a prompt")
-        return
+    # Create an instance of PrestoAgentInstruments, which in turn creates PrestoManager
+    with PrestoAgentInstruments(PRESTO_DB_CONFIG, session_id) as presto_instruments:
+        # Execute the query and fetch results using PrestoManager's run_sql method
 
-    raw_prompt = args.prompt
+        # call_center - SQL_STATEMENT_ONE = "SELECT cc_call_center_sk, cc_call_center_id, cc_rec_start_date, cc_rec_end_date, cc_closed_date_sk, cc_open_date_sk, cc_name, cc_class, cc_employees, cc_sq_ft, cc_hours, cc_manager, cc_mkt_id, cc_mkt_class, cc_mkt_desc, cc_market_manager, cc_division, cc_division_name, cc_company, cc_company_name, cc_street_number, cc_street_name, cc_street_type, cc_suite_number, cc_city, cc_county, cc_state, cc_zip, cc_country, cc_gmt_offset, cc_tax_percentage FROM tpcds.sf10.call_center LIMIT 10"
+        # customer_address - SQL_STATEMENT_TWO = "SELECT ca_address_sk, ca_address_id, ca_street_number, ca_street_name, ca_street_type, ca_suite_number, ca_city, ca_county, ca_state, ca_zip, ca_country, ca_gmt_offset, ca_location_type  FROM tpcds.sf10.customer_address LIMIT 10"
+        # store - SQL_STATEMENT_THREE = "SELECT s_store_sk, s_store_id, s_rec_start_date, s_rec_end_date, s_closed_date_sk, s_store_name, s_number_employees, s_floor_space, s_hours, s_manager, s_market_id, s_geography_class, s_market_desc, s_market_manager, s_division_id, s_division_name, s_company_id, s_company_name, s_street_number, s_street_name, s_street_type, s_suite_number, s_city, s_county, s_state, s_zip, s_country, s_gmt_offset, s_tax_precentage FROM tpcds.sf10.store LIMIT 10"
 
-    prompt = f"Fulfill this database query: {raw_prompt}. "
+        json_results = presto_instruments.run_sql("SELECT s_store_sk, s_store_id, s_rec_start_date, s_rec_end_date, s_closed_date_sk, s_store_name, s_number_employees, s_floor_space, s_hours, s_manager, s_market_id, s_geography_class, s_market_desc, s_market_manager, s_division_id, s_division_name, s_company_id, s_company_name, s_street_number, s_street_name, s_street_type, s_suite_number, s_city, s_county, s_state, s_zip, s_country, s_gmt_offset, s_tax_precentage FROM tpcds.sf10.store LIMIT 10")
 
-    session_id = rand.generate_session_id(raw_prompt)
+        # Convert the JSON results to a Python object
+        results = json.loads(json_results)
 
-    # ---------------- Create Agent Instruments And Build Database Connection ----------------
-
-    with PrestoAgentInstruments(PRESTO_DB_URL, session_id) as (agent_instruments, db):
-        # TODO: Fix PRESTO_DB_URL set up as dictionary
-
-        # ----------- Gate Team: Prevent bad prompts from running and burning your $$$ -------------
-
-        gate_orchestrator = agents_presto.build_team_orchestrator(
-            "scrum_master",
-            agent_instruments,
-            validate_results=lambda: (True, ""),
-        )
-
-        gate_orchestrator: ConversationResult = (
-            gate_orchestrator.sequential_conversation(prompt)
-        )
-
-        print("gate_orchestrator.last_message_str", gate_orchestrator.last_message_str)
-
-        nlq_confidence = int(gate_orchestrator.last_message_str)
-
-        match nlq_confidence:
-            case (1 | 2):
-                print(f"❌ Gate Team Rejected - Confidence too low: {nlq_confidence}")
-                return
-            case (3 | 4 | 5):
-                print(f"✅ Gate Team Approved - Valid confidence: {nlq_confidence}")
-            case _:
-                print("❌ Gate Team Rejected - Invalid response")
-                return
-
-        # -------- BUILD TABLE DEFINITIONS -----------
-        # TODO: Set up table definitions so they work with PrestoDB db_presto.py file methods
-        map_table_name_to_table_def = db.get_table_definition_map_for_embeddings()
-
-        database_embedder = embeddings_presto.DatabaseEmbedder()
-
-        for name, table_def in map_table_name_to_table_def.items():
-            database_embedder.add_table(name, table_def)
-
-        similar_tables = database_embedder.get_similar_tables(raw_prompt, n=5)
-
-        table_definitions = database_embedder.get_table_definitions_from_names(
-            similar_tables
-        )
-
-        related_table_names = db.get_related_tables(similar_tables, n=3)
-
-        core_and_related_table_definitions = (
-            database_embedder.get_table_definitions_from_names(
-                related_table_names + similar_tables
-            )
-        )
-
-        prompt = llm.add_cap_ref(
-            prompt,
-            f"Use these {PRESTO_TABLE_DEFINITIONS_CAP_REF} to satisfy the database query.",
-            PRESTO_TABLE_DEFINITIONS_CAP_REF,
-            table_definitions,
-        )
-
-        # ----------- Data Eng Team: Based on a SQL table definitions and a prompt create an sql statement and execute it -------------
-
-        data_eng_orchestrator = agents_presto.build_team_orchestrator(
-            "data_eng",
-            agent_instruments,
-            validate_results=agent_instruments.validate_run_sql,
-        )
-
-        data_eng_conversation_result: ConversationResult = (
-            data_eng_orchestrator.sequential_conversation(prompt)
-        )
-
-        match data_eng_conversation_result:
-            case ConversationResult(
-                success=True, cost=data_eng_cost, tokens=data_eng_tokens
-            ):
-                print(
-                    f"✅ Orchestrator was successful. Team: {data_eng_orchestrator.name}"
-                )
-                print(
-                    f"💰📊🤖 {data_eng_orchestrator.name} Cost: {data_eng_cost}, tokens: {data_eng_tokens}"
-                )
-            case _:
-                print(
-                    f"❌ Orchestrator failed. Team: {data_eng_orchestrator.name} Failed"
-                )
-
-        # ----------- Data Insights Team: Based on sql table definitions and a prompt generate novel insights -------------
-
-        innovation_prompt = f"Given this database query: '{raw_prompt}'. Generate novel insights and new database queries to give business insights."
-
-        insights_prompt = llm.add_cap_ref(
-            innovation_prompt,
-            f"Use these {PRESTO_TABLE_DEFINITIONS_CAP_REF} to satisfy the database query.",
-            PRESTO_TABLE_DEFINITIONS_CAP_REF,
-            core_and_related_table_definitions,
-        )
-
-        data_insights_orchestrator = agents_presto.build_team_orchestrator(
-            "data_insights",
-            agent_instruments,
-            validate_results=agent_instruments.validate_innovation_files,
-        )
-
-        data_insights_conversation_result: ConversationResult = (
-            data_insights_orchestrator.round_robin_conversation(
-                insights_prompt, loops=1
-            )
-        )
-
-        match data_insights_conversation_result:
-            case ConversationResult(
-                success=True, cost=data_insights_cost, tokens=data_insights_tokens
-            ):
-                print(
-                    f"✅ Orchestrator was successful. Team: {data_insights_orchestrator.name}"
-                )
-                print(
-                    f"💰📊🤖 {data_insights_orchestrator.name} Cost: {data_insights_cost}, tokens: {data_insights_tokens}"
-                )
-            case _:
-                print(
-                    f"❌ Orchestrator failed. Team: {data_insights_orchestrator.name} Failed"
-                )
+        # Log the results
+        print("Query Results:")
+        for row in results:
+            print(row)
 
 
 if __name__ == "__main__":
