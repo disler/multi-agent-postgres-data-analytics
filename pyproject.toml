@@ -30,5 +30,5 @@ build-backend = "poetry.core.masonry.api"
 # old_start = "postgres_da_ai_agent.main:main"
 start_presto = "postgres_da_ai_agent.main_presto:main"
 start_postgres = "postgres_da_ai_agent.main_postgres:main"
-turbo = "postgres_da_ai_agent.turbo_main:main"
-
+turbo_presto = "postgres_da_ai_agent.turbo_main_presto:main"
+turbo_postgres = "postgres_da_ai_agent.turbo_main_postgres:main"
