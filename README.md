@@ -172,4 +172,7 @@ Exclusive Beta Launch Code: `9999`
 - It's tricky to know when to write explicit code vs prompt engineer vs build a multi-agent team. This is a new skill that will take time to master.
 
 ## 🧠 2024 Multi-agent / LLM / Agentic Predictions 🧠
-> stay tuned for predictions
+![2024-predictions](imgs/2024-predictions.png)
+- [2024 Predictions Video (Recommended)](https://youtu.be/UES89QRc3Sk)
+- [2024 Predictions Blog Post](https://indydevdan.com/blogs/2024-predictions)
+- [2024 Predictions Slides](https://firebasestorage.googleapis.com/v0/b/solopreneur-d8361.appspot.com/o/solopreneur%2Fblog%2Fimages%2F2024-predictions-for-advanced-ai-llm-engineers-small.pdf?alt=media&token=44c39c93-8e35-45c4-92c0-3198721f6081)
