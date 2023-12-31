@@ -135,6 +135,8 @@ Video: [https://youtu.be/5wROK4lBoeo](https://youtu.be/5wROK4lBoeo)
 
 Talk To Your Database: [https://talktoyourdb.com](https://talktoyourdatabase.com)
 
+Exclusive Beta Launch Code: `9999`
+
 <img src="imgs/10-talk-to-your-database.png" width="300" height="auto">
 
 ---
