@@ -36,8 +36,12 @@ class AgentInstruments:
     def make_agent_cost_file(self, team_name: str):
         return os.path.join(self.root_dir, f"agent_cost_{team_name}.json")
 
-    def make_table_definitions_file(self):
-        return os.path.join(self.root_dir, f"table_definitions.txt")
+    @staticmethod
+    def make_table_definitions_file():
+        return os.path.join(BASE_DIR, f"schema.txt")
+
+    def make_table_description_file(self):
+        return os.path.join(self.root_dir, f"schema_description.txt")
 
     def make_query_results_file(self, table_definitions):
         return os.path.join(self.root_dir, f"query_results.txt")

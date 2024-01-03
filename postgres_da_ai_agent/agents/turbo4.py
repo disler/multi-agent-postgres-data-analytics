@@ -69,11 +69,18 @@ class Turbo4:
 
     def store_table_definitions(self, schema_output_file: str, table_definitions):
         """
-        Stores the table definitions in a TXT file.
+        Stores the table definitions in a TXT file if the schema file does not exist.
 
         :param schema_output_file: The output file path to store the schema.
         :param table_definitions: The table definitions data to be stored (formatted as a string).
         """
+        schema_file_path = os.path.join("./agent_results", "schema.txt")
+
+        # Check if the schema file already exists
+        if os.path.exists(schema_file_path):
+            print("Schema file already exists. Skipping storing table definitions.")
+            return self
+
         print("Storing table definitions in a TXT file.")
 
         with open(schema_output_file, "w") as f:
