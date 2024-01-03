@@ -67,26 +67,18 @@ run_sql_tool_config = {
 }
 
 
-def run_framework():
-    # The prompt for the AI
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--prompt", help="The prompt for the AI")
-    args = parser.parse_args()
+def run_framework(query: str):
+    """
+    Function to run the framework with the provided query.
 
-    if not args.prompt:
-        print("Please provide a prompt")
-        return
-
-    raw_prompt = args.prompt
-
-    prompt = f"Fulfill this database query: {raw_prompt}. "
+    :param query: The database query to execute.
+    """
+    prompt = f"Fulfill this database query: {query}. "
 
     # Generate session ID
     assistant_name = "Turbo4"
-
     assistant = Turbo4()
-
-    session_id = rand.generate_session_id(assistant_name + raw_prompt)
+    session_id = rand.generate_session_id(assistant_name + query)
 
     with PrestoAgentInstruments(PRESTO_DB_CONFIG, session_id) as (agent_instruments, db):
         database_embedder = embeddings_presto.DatabaseEmbedder(db)
@@ -98,6 +90,9 @@ def run_framework():
 
         # Create the full file path for the table definitions file
         schema_output_file = agent_instruments.make_table_definitions_file()
+
+        # Create a schema description file with the primary and foreign keys
+        schema_description = agent_instruments.make_table_description_file()
 
         prompt = llm.add_cap_ref(
             prompt,
@@ -121,13 +116,8 @@ def run_framework():
             .run_thread()
             .store_table_definitions(schema_output_file, table_definitions)
             .add_message(
-                "Based on these definitions, now find the corresponding table."
-            )
-            # TODO: Implement this function.
-            .add_message(
                 "Use the run_sql function to run the SQL you've just generated.",
             )
-            # TODO: Set run_sql so it prints the entire results.
             .run_thread(toolbox=[tools[0].name])
             .run_validation(agent_instruments.validate_run_sql)
             .spy_on_assistant(agent_instruments.make_agent_chat_file(assistant_name))
@@ -166,8 +156,17 @@ def run_framework():
         # )
 
 
+# Function to handle command-line arguments and invoke run_framework
 def main():
-    return run_framework()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--prompt", help="The prompt for the AI")
+    args = parser.parse_args()
+
+    if not args.prompt:
+        print("Please provide a prompt")
+        return
+
+    run_framework(args.prompt)
 
 
 if __name__ == "__main__":
