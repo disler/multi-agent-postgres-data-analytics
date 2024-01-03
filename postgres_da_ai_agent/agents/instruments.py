@@ -37,10 +37,10 @@ class AgentInstruments:
         return os.path.join(self.root_dir, f"agent_cost_{team_name}.json")
 
     def make_table_definitions_file(self):
-        return os.path.join(self.root_dir, f"table_definitions.json")
+        return os.path.join(self.root_dir, f"table_definitions.txt")
 
     def make_query_results_file(self, table_definitions):
-        return os.path.join(self.root_dir, f"query_results.json")
+        return os.path.join(self.root_dir, f"query_results.txt")
 
     @property
     def root_dir(self):
