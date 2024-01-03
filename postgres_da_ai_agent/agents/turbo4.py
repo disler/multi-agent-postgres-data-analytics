@@ -20,9 +20,10 @@ class Turbo4:
     Simple, chainable class for the OpenAI's GPT-4 Assistant APIs.
     """
 
-    def __init__(self):
+    def __init__(self, agent_instruments=None):
         openai.api_key = os.environ.get("OPENAI_API_KEY")
         self.client = openai.OpenAI()
+        self.agent_instruments = agent_instruments
         self.map_function_tools: Dict[str, TurboTool] = {}
         self.current_thread_id = None
         self.thread_messages: List[ThreadMessage] = []
@@ -63,6 +64,35 @@ class Turbo4:
         messages_as_json = [asdict(msg) for msg in sorted_messages]
         with open(output_file, "w") as f:
             json.dump(messages_as_json, f, indent=2)
+
+        return self
+
+    def store_table_definitions(self, schema_output_file: str, table_definitions):
+        """
+        Stores the table definitions in a TXT file.
+
+        :param schema_output_file: The output file path to store the schema.
+        :param table_definitions: The table definitions data to be stored (formatted as a string).
+        """
+        print("Storing table definitions in a TXT file.")
+
+        with open(schema_output_file, "w") as f:
+            f.write(table_definitions)
+
+        return self
+
+    def store_query_results(self, results_output_file: str, sql_results):
+        """
+        Stores the query results in a JSON file.
+
+        :param results_output_file: The output file path to store the query results.
+        :param sql_results: The SQL query results to be stored.
+        """
+        print("Storing query results in a TXT file.")
+
+        # Use the sql_results directly for storing
+        with open(results_output_file, "w") as f:
+            f.write(sql_results)
 
         return self
 
@@ -224,50 +254,52 @@ class Turbo4:
         )
         self.run_id = run.id
 
+        sql_results = None  # Initialize variable to store SQL results
+
         # Polling mechanism to wait for thread's run completion or required actions
         while True:
-            # self.list_steps()
-
             run_status = self.client.beta.threads.runs.retrieve(
                 thread_id=self.current_thread_id, run_id=self.run_id
             )
             if run_status.status == "requires_action":
                 tool_outputs: List[ToolOutput] = []
-                for (
-                    tool_call
-                ) in run_status.required_action.submit_tool_outputs.tool_calls:
+                for tool_call in run_status.required_action.submit_tool_outputs.tool_calls:
                     tool_function = tool_call.function
                     tool_name = tool_function.name
 
-                    # Check if tool_arguments is already a dictionary, if so, proceed directly
                     if isinstance(tool_function.arguments, dict):
                         tool_arguments = tool_function.arguments
                     else:
-                        # Assume the arguments are JSON string and parse them
                         tool_arguments = json.loads(tool_function.arguments)
 
                     print(f"run_thread() Calling {tool_name}({tool_arguments})")
 
-                    # Assuming arguments are passed as a dictionary
                     function_output = self.map_function_tools[tool_name].function(
                         **tool_arguments
                     )
+
+                    if tool_name == "run_sql":
+                        sql_results = function_output  # Capture SQL results
 
                     tool_outputs.append(
                         ToolOutput(tool_call_id=tool_call.id, output=function_output)
                     )
 
-                # Submit the tool outputs back to the API
                 self.client.beta.threads.runs.submit_tool_outputs(
                     thread_id=self.current_thread_id,
                     run_id=self.run_id,
-                    tool_outputs=[to for to in tool_outputs],
+                    tool_outputs=tool_outputs,
                 )
             elif run_status.status == "completed":
                 self.load_threads()
+
+                # Store SQL results if available
+                if sql_results:
+                    self.store_query_results(self.agent_instruments.make_query_results_file(), sql_results)
+
                 return self
 
-            time.sleep(self.polling_interval)  # Wait a little before polling again
+            time.sleep(self.polling_interval)
 
     def enable_retrieval(self):
         print(f"enable_retrieval()")
@@ -282,8 +314,3 @@ class Turbo4:
         )
 
         return self
-
-    # Future versions:
-
-    # enable code interpreter
-    # crud files

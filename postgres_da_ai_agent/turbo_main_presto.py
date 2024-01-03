@@ -33,8 +33,8 @@ PRESTO_DB_CONFIG = {
     'http_scheme': os.getenv('PRESTO_HTTP_SCHEME'),
     'auth': auth
 }
-PRESTO_TABLE_DEFINITIONS_CAP_REF = "TABLE_DEFINITIONS"
 
+PRESTO_TABLE_DEFINITIONS_CAP_REF = "TABLE_DEFINITIONS"
 
 custom_function_tool_config = {
     "type": "function",
@@ -52,7 +52,7 @@ run_sql_tool_config = {
     "type": "function",
     "function": {
         "name": "run_sql",
-        "description": "Run a SQL query against the postgres database",
+        "description": "Run a SQL query against the Presto database",
         "parameters": {
             "type": "object",
             "properties": {
@@ -67,12 +67,8 @@ run_sql_tool_config = {
 }
 
 
-def store_fact(fact: str):
-    print(f"------store_fact({fact})------")
-    return "Fact stored."
-
-
-def main():
+def run_framework():
+    # The prompt for the AI
     parser = argparse.ArgumentParser()
     parser.add_argument("--prompt", help="The prompt for the AI")
     args = parser.parse_args()
@@ -85,6 +81,7 @@ def main():
 
     prompt = f"Fulfill this database query: {raw_prompt}. "
 
+    # Generate session ID
     assistant_name = "Turbo4"
 
     assistant = Turbo4()
@@ -94,9 +91,13 @@ def main():
     with PrestoAgentInstruments(PRESTO_DB_CONFIG, session_id) as (agent_instruments, db):
         database_embedder = embeddings_presto.DatabaseEmbedder(db)
 
-        table_definitions = database_embedder.get_similar_table_defs_for_prompt(
-            raw_prompt
-        )
+        # table_definitions = database_embedder.get_similar_table_defs_for_prompt(raw_prompt)
+
+        # Retrieve all table definitions
+        table_definitions = database_embedder.get_all_table_defs()
+
+        # Create the full file path for the table definitions file
+        schema_output_file = agent_instruments.make_table_definitions_file()
 
         prompt = llm.add_cap_ref(
             prompt,
@@ -118,9 +119,15 @@ def main():
             .make_thread()
             .add_message(prompt)
             .run_thread()
+            .store_table_definitions(schema_output_file, table_definitions)
+            .add_message(
+                "Based on these definitions, now find the corresponding table."
+            )
+            # TODO: Implement this function.
             .add_message(
                 "Use the run_sql function to run the SQL you've just generated.",
             )
+            # TODO: Set run_sql so it prints the entire results.
             .run_thread(toolbox=[tools[0].name])
             .run_validation(agent_instruments.validate_run_sql)
             .spy_on_assistant(agent_instruments.make_agent_chat_file(assistant_name))
@@ -157,6 +164,10 @@ def main():
         #     .add_message("Use the store_fact function to 1 fact.")
         #     .run_thread(toolbox=["store_fact"])
         # )
+
+
+def main():
+    return run_framework()
 
 
 if __name__ == "__main__":

@@ -8,7 +8,6 @@ import json
 BASE_DIR = os.environ.get("BASE_DIR", "./agent_results")
 
 
-# TODO: Set both classes correctly so the methods they share are not replicated and can work correctly.
 class AgentInstruments:
     """
     Base class for multi-agent instruments that are tools, state, and functions that an agent can use across the
@@ -36,6 +35,12 @@ class AgentInstruments:
 
     def make_agent_cost_file(self, team_name: str):
         return os.path.join(self.root_dir, f"agent_cost_{team_name}.json")
+
+    def make_table_definitions_file(self):
+        return os.path.join(self.root_dir, f"table_definitions.json")
+
+    def make_query_results_file(self, table_definitions):
+        return os.path.join(self.root_dir, f"query_results.json")
 
     @property
     def root_dir(self):
@@ -257,8 +262,6 @@ class PrestoAgentInstruments(AgentInstruments):
         Run a SQL query against the PrestoDB
         """
         return self.db.run_sql(sql)
-    # TODO: Dump these results to a JSON file
-
 
     def validate_run_sql(self):
         """

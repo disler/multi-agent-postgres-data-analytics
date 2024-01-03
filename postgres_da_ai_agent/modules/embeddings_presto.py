@@ -1,7 +1,9 @@
+import json
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import BertTokenizer, BertModel
 
 from postgres_da_ai_agent.modules.db_presto import PrestoManager
+
 
 # TODO: Set up class so it works with PrestoManager, at the moment is only importing PostgresManager. Also,
 #  make it aware of the parents component so we choose by default the right manager depending on the databaase we are
@@ -37,16 +39,16 @@ class DatabaseEmbedder:
 
         return table_definitions
 
-    def add_table(self, table_name: str, text_representation: str):
+    def add_table(self, table_name: str, table_def):
         """
-        Add a table to the database embedder.
-        Map the table name to its embedding and text representation.
+        Convert table definition to a string format suitable for embedding,
+        yet store it in the original structured format.
         """
-        self.map_name_to_embeddings[table_name] = self.compute_embeddings(
-            text_representation
-        )
+        # Correctly handle table_def as a dictionary
+        col_details_str = ' '.join([f"{col_name} {data_type}" for col_name, data_type in table_def.items()])
 
-        self.map_name_to_table_def[table_name] = text_representation
+        self.map_name_to_embeddings[table_name] = self.compute_embeddings(col_details_str)
+        self.map_name_to_table_def[table_name] = table_def  # Store the original structure
 
     def compute_embeddings(self, text):
         """
@@ -104,11 +106,34 @@ class DatabaseEmbedder:
 
         return similar_tables_via_embeddings + similar_tables_via_word_match
 
-    def get_table_definitions_from_names(self, table_names: list) -> str:
+    def get_table_definitions_from_names(self, table_names: list):
         """
-        Given a list of table names, return their table definitions.
+        Given a list of table names, return their table definitions in the desired format.
+        Formats the table definitions as a plain text string suitable for a .txt file.
         """
-        table_defs = [
-            self.map_name_to_table_def[table_name] for table_name in table_names
-        ]
-        return "\n\n".join(table_defs)
+        formatted_table_defs = ""
+
+        for table_name in table_names:
+            table_def = self.map_name_to_table_def[table_name]
+            formatted_table_defs += f"{table_name}\n"
+
+            for column_name, data_type in table_def.items():
+                formatted_table_defs += f"{column_name}, {data_type}\n"
+
+            formatted_table_defs += "\n"  # Add a blank line between tables for readability
+
+        return formatted_table_defs
+
+    def get_all_table_defs(self):
+        """
+        Retrieve and print all table definitions.
+        """
+        map_table_name_to_table_def = self.db.get_table_definitions_map_for_embeddings()
+        for name, table_def in map_table_name_to_table_def.items():
+            # Pass the table definition directly to add_table
+            self.add_table(name, table_def)
+
+        all_table_defs = self.get_table_definitions_from_names(map_table_name_to_table_def.keys())
+
+        # The formatted table definitions are returned
+        return all_table_defs

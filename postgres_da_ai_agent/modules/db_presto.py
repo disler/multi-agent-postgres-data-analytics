@@ -76,18 +76,21 @@ class PrestoManager:
 
     def get_table_definition(self, table_name):
         """
-        Get the 'create' definition for a table in PrestoDB
+        Get the 'create' definition for a table in PrestoDB.
+        The output format is modified to match the requested structure.
         """
-        # PrestoDB does not directly support a single query to get the full create statement.
-        # You need to construct it manually from column information.
         self.cur.execute(f"DESCRIBE {table_name}")
         rows = self.cur.fetchall()
-        create_table_stmt = f"CREATE TABLE {table_name} (\n"
+
+        # Dictionary to hold the table definition
+        table_definition = {table_name: {}}
+
+        # Adding each column as a key-value pair in the table definition dictionary
         for row in rows:
             column_name, column_type, _ = row[:3]
-            create_table_stmt += f"  {column_name} {column_type},\n"
-        create_table_stmt = create_table_stmt.rstrip(",\n") + "\n);"
-        return create_table_stmt
+            table_definition[table_name][column_name] = column_type
+
+        return table_definition
 
     def get_table_definitions_for_prompt(self):
         """
@@ -101,13 +104,15 @@ class PrestoManager:
 
     def get_table_definitions_map_for_embeddings(self):
         """
-        Creates a map of table names to table definitions
+        Creates a map of table names to table definitions.
+        The structure is updated to match the requested format.
         """
         table_names = self.get_all_table_names()
         definitions = {}
         for table_name in table_names:
-            definitions[table_name] = self.get_table_definition(table_name)
+            definitions.update(self.get_table_definition(table_name))
         return definitions
+
 
     def get_related_tables(self, table_list, n=2):
         """
