@@ -77,7 +77,9 @@ def run_framework(query: str):
 
     # Generate session ID
     assistant_name = "Turbo4"
-    assistant = Turbo4()
+    session_id = rand.generate_session_id(assistant_name + query)
+    agent_instruments = PrestoAgentInstruments(PRESTO_DB_CONFIG, session_id)
+    assistant = Turbo4(agent_instruments)
     session_id = rand.generate_session_id(assistant_name + query)
 
     with PrestoAgentInstruments(PRESTO_DB_CONFIG, session_id) as (agent_instruments, db):
@@ -108,7 +110,7 @@ def run_framework(query: str):
         (
             assistant.get_or_create_assistant(assistant_name)
             .set_instructions(
-                "You're an elite SQL developer. You generate the most concise and performant SQL queries."
+                "You're an elite SQL developer. You generate the most concise and performant SQL queries. Do not include a semicolon at the end of the SQL statement."
             )
             .equip_tools(tools)
             .make_thread()
