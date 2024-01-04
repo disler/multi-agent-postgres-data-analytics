@@ -1,11 +1,11 @@
-from postgres_da_ai_agent.agents.turbo4 import Turbo4
-from postgres_da_ai_agent.data_types import Chat, TurboTool
+from da_ai_agent.agents.turbo4 import Turbo4
+from da_ai_agent.data_types import Chat, TurboTool
 from typing import List, Callable
 import os
-from postgres_da_ai_agent.agents.instruments import PrestoAgentInstruments
-from postgres_da_ai_agent.modules import llm
-from postgres_da_ai_agent.modules import rand
-from postgres_da_ai_agent.modules import embeddings_presto
+from da_ai_agent.agents.instruments import PrestoAgentInstruments
+from da_ai_agent.modules import llm
+from da_ai_agent.modules import rand
+from da_ai_agent.modules import embeddings_presto
 import argparse
 import dotenv
 import prestodb

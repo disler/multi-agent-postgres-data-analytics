@@ -1,40 +1,53 @@
 """
 Heads up: in v7 pyautogen doesn't work with the latest openai version so this file has been commented out via pyproject.toml
 """
-
+import json
 import os
-from postgres_da_ai_agent.agents.instruments import PostgresAgentInstruments
-from postgres_da_ai_agent.modules.db_postgres import PostgresManager
-from postgres_da_ai_agent.modules import llm
-from postgres_da_ai_agent.modules import orchestrator
-from postgres_da_ai_agent.modules import rand
-from postgres_da_ai_agent.modules import file
-from postgres_da_ai_agent.modules import embeddings_postgres
-from postgres_da_ai_agent.agents import agents_postgres
+
+from da_ai_agent.agents import agents_presto
+from da_ai_agent.agents.instruments import PrestoAgentInstruments
+from da_ai_agent.modules.db_presto import PrestoManager
+from da_ai_agent.modules import llm
+from da_ai_agent.modules import orchestrator
+from da_ai_agent.modules import rand
+from da_ai_agent.modules import file
+from da_ai_agent.modules import embeddings_presto
+import prestodb
 import dotenv
 import argparse
 import autogen
 
-from postgres_da_ai_agent.data_types import ConversationResult
-
+from da_ai_agent.data_types import ConversationResult
 
 # ---------------- Your Environment Variables ----------------
 
 dotenv.load_dotenv()
 
-assert os.environ.get("DATABASE_URL"), "POSTGRES_CONNECTION_URL not found in .env file"
-assert os.environ.get(
-    "OPENAI_API_KEY"
-), "POSTGRES_CONNECTION_URL not found in .env file"
+required_env_vars = ["PRESTO_HOST", "OPENAI_API_KEY", "PRESTO_PORT", "PRESTO_USER", "PRESTO_CATALOG", "PRESTO_SCHEMA", "PRESTO_HTTP_SCHEME"]
 
+for var in required_env_vars:
+    if not os.environ.get(var):
+        raise EnvironmentError(f"{var} not found in .env file")
 
 # ---------------- Constants ---------------------------------
 
+# Check if PRESTO_PASSWORD is present in the environment, use None if not provided
+presto_password = os.getenv('PRESTO_PASSWORD', None)
+auth = prestodb.auth.BasicAuthentication(os.getenv('PRESTO_USER'), presto_password) if presto_password else None
 
-DB_URL = os.environ.get("DATABASE_URL")
+PRESTO_DB_CONFIG = {
+    'host': os.getenv('PRESTO_HOST'),
+    'port': int(os.getenv('PRESTO_PORT')),
+    'user': os.getenv('PRESTO_USER'),
+    'catalog': os.getenv('PRESTO_CATALOG'),
+    'schema': os.getenv('PRESTO_SCHEMA'),
+    'http_scheme': os.getenv('PRESTO_HTTP_SCHEME'),
+    'auth': auth
+}
+
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
-POSTGRES_TABLE_DEFINITIONS_CAP_REF = "TABLE_DEFINITIONS"
+PRESTO_TABLE_DEFINITIONS_CAP_REF = "TABLE_DEFINITIONS"
 
 
 def main():
@@ -56,10 +69,12 @@ def main():
 
     # ---------------- Create Agent Instruments And Build Database Connection ----------------
 
-    with PostgresAgentInstruments(DB_URL, session_id) as (agent_instruments, db):
+    with PrestoAgentInstruments(PRESTO_DB_CONFIG, session_id) as (agent_instruments, db):
+        # TODO: Fix PRESTO_DB_URL set up as dictionary
+
         # ----------- Gate Team: Prevent bad prompts from running and burning your $$$ -------------
 
-        gate_orchestrator = agents_postgres.build_team_orchestrator(
+        gate_orchestrator = agents_presto.build_team_orchestrator(
             "scrum_master",
             agent_instruments,
             validate_results=lambda: (True, ""),
@@ -84,10 +99,10 @@ def main():
                 return
 
         # -------- BUILD TABLE DEFINITIONS -----------
-
+        # TODO: Set up table definitions so they work with PrestoDB db_presto.py file methods
         map_table_name_to_table_def = db.get_table_definition_map_for_embeddings()
 
-        database_embedder = embeddings_postgres.DatabaseEmbedder()
+        database_embedder = embeddings_presto.DatabaseEmbedder()
 
         for name, table_def in map_table_name_to_table_def.items():
             database_embedder.add_table(name, table_def)
@@ -108,14 +123,14 @@ def main():
 
         prompt = llm.add_cap_ref(
             prompt,
-            f"Use these {POSTGRES_TABLE_DEFINITIONS_CAP_REF} to satisfy the database query.",
-            POSTGRES_TABLE_DEFINITIONS_CAP_REF,
+            f"Use these {PRESTO_TABLE_DEFINITIONS_CAP_REF} to satisfy the database query.",
+            PRESTO_TABLE_DEFINITIONS_CAP_REF,
             table_definitions,
         )
 
         # ----------- Data Eng Team: Based on a SQL table definitions and a prompt create an sql statement and execute it -------------
 
-        data_eng_orchestrator = agents_postgres.build_team_orchestrator(
+        data_eng_orchestrator = agents_presto.build_team_orchestrator(
             "data_eng",
             agent_instruments,
             validate_results=agent_instruments.validate_run_sql,
@@ -146,12 +161,12 @@ def main():
 
         insights_prompt = llm.add_cap_ref(
             innovation_prompt,
-            f"Use these {POSTGRES_TABLE_DEFINITIONS_CAP_REF} to satisfy the database query.",
-            POSTGRES_TABLE_DEFINITIONS_CAP_REF,
+            f"Use these {PRESTO_TABLE_DEFINITIONS_CAP_REF} to satisfy the database query.",
+            PRESTO_TABLE_DEFINITIONS_CAP_REF,
             core_and_related_table_definitions,
         )
 
-        data_insights_orchestrator = agents_postgres.build_team_orchestrator(
+        data_insights_orchestrator = agents_presto.build_team_orchestrator(
             "data_insights",
             agent_instruments,
             validate_results=agent_instruments.validate_innovation_files,

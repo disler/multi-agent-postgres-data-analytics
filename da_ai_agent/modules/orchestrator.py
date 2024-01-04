@@ -2,9 +2,9 @@ import dataclasses
 import json
 from typing import List, Optional, Tuple
 import autogen
-from postgres_da_ai_agent.agents.instruments import AgentInstruments
-from postgres_da_ai_agent.modules import llm
-from postgres_da_ai_agent.data_types import Chat, ConversationResult
+from da_ai_agent.agents.instruments import AgentInstruments
+from da_ai_agent.modules import llm
+from da_ai_agent.data_types import Chat, ConversationResult
 
 
 class Orchestrator:

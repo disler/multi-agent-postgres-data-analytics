@@ -12,7 +12,7 @@ from typing import Any, Dict, List
 import openai
 import tiktoken
 
-from postgres_da_ai_agent.data_types import TurboTool
+from da_ai_agent.data_types import TurboTool
 
 # load .env file
 load_dotenv()

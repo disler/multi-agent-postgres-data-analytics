@@ -42,13 +42,14 @@ class PrestoManager:
 
     def run_sql(self, sql) -> str:
         """
-        Run a SQL query against the PrestoDB database
+        Run a SQL query against the PrestoDB database and print the results.
         """
         self.cur.execute(sql)
         rows = self.cur.fetchall()
 
         # Handling empty result sets
         if not rows:
+            print(json.dumps([]))
             return json.dumps([])
 
         # Fetching column names from the cursor
@@ -56,6 +57,10 @@ class PrestoManager:
         list_of_dicts = [dict(zip(columns, row)) for row in rows]
 
         json_result = json.dumps(list_of_dicts, indent=4, default=self.datetime_handler)
+
+        # Print the entire results
+        print(json_result)
+
         return json_result
 
     def datetime_handler(self, obj):

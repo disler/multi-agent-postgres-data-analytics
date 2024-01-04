@@ -2,7 +2,7 @@ import json
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import BertTokenizer, BertModel
 
-from postgres_da_ai_agent.modules.db_presto import PrestoManager
+from da_ai_agent.modules.db_presto import PrestoManager
 
 
 # TODO: Set up class so it works with PrestoManager, at the moment is only importing PostgresManager. Also,

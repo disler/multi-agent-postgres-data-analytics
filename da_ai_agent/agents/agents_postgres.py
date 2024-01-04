@@ -1,7 +1,7 @@
 from typing import Optional, List, Dict, Any
-from postgres_da_ai_agent.agents.instruments import PostgresAgentInstruments
-from postgres_da_ai_agent.modules import orchestrator
-from postgres_da_ai_agent.agents import agent_config
+from da_ai_agent.agents.instruments import PostgresAgentInstruments
+from da_ai_agent.modules import orchestrator
+from da_ai_agent.agents import agent_config
 import autogen
 import guidance
 

@@ -1,11 +1,11 @@
-from postgres_da_ai_agent.agents.turbo4 import Turbo4
-from postgres_da_ai_agent.data_types import Chat, TurboTool
+from da_ai_agent.agents.turbo4 import Turbo4
+from da_ai_agent.data_types import Chat, TurboTool
 from typing import List, Callable
 import os
-from postgres_da_ai_agent.agents.instruments import PostgresAgentInstruments
-from postgres_da_ai_agent.modules import llm
-from postgres_da_ai_agent.modules import rand
-from postgres_da_ai_agent.modules import embeddings_postgres
+from da_ai_agent.agents.instruments import PostgresAgentInstruments
+from da_ai_agent.modules import llm
+from da_ai_agent.modules import rand
+from da_ai_agent.modules import embeddings_postgres
 import argparse
 
 DB_URL = os.environ.get("DATABASE_URL")

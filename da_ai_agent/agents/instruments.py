@@ -1,7 +1,7 @@
-from postgres_da_ai_agent.modules.db_postgres import PostgresManager
-from postgres_da_ai_agent.modules.db_presto import PrestoManager
+from da_ai_agent.modules.db_postgres import PostgresManager
+from da_ai_agent.modules.db_presto import PrestoManager
 import prestodb
-from postgres_da_ai_agent.modules import file
+from da_ai_agent.modules import file
 import os
 import json
 
