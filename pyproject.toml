@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "This project is a fork from the multi-agent-system from indydevdan, we expanded it's capabilities to connect with PrestoDB clusters."
 authors = ["apereiracv <alejandro@axeom.xyz>", "alvropena <alvaro@axeom.xyz>"]
 readme = "README.md"
-packages = [{include = "postgres_da_ai_agent"}]
+packages = [{include = "da_ai_agent"}]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
@@ -28,7 +28,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.scripts]
 # Not available in current version due to pyautogen not supporting openai ^1.2.3
 # old_start = "da_ai_agent.main:main"
-start_presto = "postgres_da_ai_agent.main_presto:main"
-start_postgres = "postgres_da_ai_agent.main_postgres:main"
-turbo_presto = "postgres_da_ai_agent.turbo_main_presto:main"
-turbo_postgres = "postgres_da_ai_agent.turbo_main_postgres:main"
+start_presto = "da_ai_agent.main_presto:main"
+start_postgres = "da_ai_agent.main_postgres:main"
+turbo_presto = "da_ai_agent.turbo_main_presto:main"
+turbo_postgres = "da_ai_agent.turbo_main_postgres:main"
