@@ -43,7 +43,7 @@ class AgentInstruments:
     def make_table_description_file(self):
         return os.path.join(self.root_dir, f"schema_description.txt")
 
-    def make_query_results_file(self, table_definitions):
+    def make_query_results_file(self):
         return os.path.join(self.root_dir, f"query_results.txt")
 
     @property
